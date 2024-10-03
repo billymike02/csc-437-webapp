@@ -1,3 +1,11 @@
 body {
   color: var(--color-text);
+  font-family: var(--font-family-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-family-display);
 }

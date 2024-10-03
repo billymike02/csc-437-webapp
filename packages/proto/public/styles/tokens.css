@@ -1,3 +1,5 @@
 :root {
   --color-text: blue;
+  --font-family-display: "Afacad Flux", sans-serif;
+  --font-family-body: "Roboto", sans-serif;
 }
