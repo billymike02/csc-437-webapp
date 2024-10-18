@@ -82,14 +82,12 @@ div.wrapper {
   display: grid;
   grid-template-columns: repeat(12, 1fr); /* 12 equal-width columns */
   gap: var(--gap-large);
-  /* grid-template-rows: repeat(2, 1fr); */
+  grid-template-rows: repeat(2, 1fr);
   grid-auto-rows: minmax(100px, auto);
   width: 100%; /* Ensure the wrapper takes up the full width of the screen */
 }
 
 div.wrapper > div {
-  /* height: fit-content; */
-
   background-color: var(--body-regular-color);
   border-radius: 3rem;
   padding: 40px;
@@ -97,12 +95,17 @@ div.wrapper > div {
 
 div.wrapper .pages-container {
   grid-column: 1 / span 6;
-  grid-row: 1;
+  grid-row: 1 / span 2;
 }
 
 div.wrapper .info-container {
   grid-column: 7 / span 6;
   grid-row: 1;
+}
+
+div.wrapper .misc-container {
+  grid-column: 7 / span 6;
+  grid-row: 2;
 }
 
 @media (max-width: 768px) {
