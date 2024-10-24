@@ -162,33 +162,3 @@ header h1 {
   transform: translate(-50%);
 }
 
-ol {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-regular);
-  padding-left: 0;
-}
-
-ol.entry-tab {
-  padding-left: 0;
-}
-
-ol.entry-tab li {
-  cursor: pointer;
-}
-
-ol.entry-tab li a {
-  background-color: var(--button-color);
-  color: var(--color-text-default);
-  padding: var(--padding-standard);
-  border-radius: var(--rounded-corners-regular);
-  display: flex;
-  width: 100%;
-
-  transition: all var(--transition-regular);
-  gap: var(--gap-regular);
-}
-
-ol.entry-tab li a:hover {
-  scale: var(--animated-scale);
-}

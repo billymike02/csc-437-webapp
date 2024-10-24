@@ -9,6 +9,9 @@
   "license": "ISC",
   "description": "",
   "workspaces": [
-      "packages/*"
-  ]
+    "packages/*"
+  ],
+  "dependencies": {
+    "@calpoly/mustang": "^1.0.9"
+  }
 }

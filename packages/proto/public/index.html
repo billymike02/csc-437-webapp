@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- auto reset on changes -->
-    <script type="text/javascript" src="https://livejs.com/live.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "@calpoly/mustang": "https://unpkg.com/@calpoly/mustang"
+        }
+      }
+    </script>
+
+    <script type="module">
+      import { define } from "@calpoly/mustang";
+      import { AccommodationElement } from "/scripts/list.js";
+
+      define({
+        "test-list": AccommodationElement,
+      });
+    </script>
+
 
     <meta charset="utf-8" />
 
@@ -57,15 +72,13 @@
         </ol>
       </div>
       <div class="misc-container">
+
         <h1>Friend Activity</h1>
-        <ol class="entry-tab">
-          <li>
-            <a>
-              Abe Muldrow
-              </a> </li>
-          <li><a>Courtney Aitken</a></li>
-          <li><a>Jacob Krynock</a></li>
-        </ol>
+        <test-list>
+          <span slot="item-a">Courtney Aitken</span>
+          <span slot="item-a">Jacob Krynock</span>
+          <span slot="item-a">Abe Muldrow</span>
+        </test-list>
       </div>
 
     </div>
