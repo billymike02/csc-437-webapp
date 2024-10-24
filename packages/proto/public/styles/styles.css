@@ -1,4 +1,4 @@
-body {
+body.dark-mode {
   background-color: var(--body-color);
   color: var(--color-text-default);
   font-family: var(--font-family-body);
@@ -10,6 +10,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+body.light-mode {
+  background-color: white;
 }
 
 a {
@@ -161,4 +165,3 @@ header h1 {
   left: 50%;
   transform: translate(-50%);
 }
-
