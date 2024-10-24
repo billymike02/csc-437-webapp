@@ -6,7 +6,13 @@ export class AccommodationElement extends HTMLElement {
     <template>
       <ol>
         <li>
-          <a><slot name="item-a">Fuck you</slot></a>
+          <a><slot name="item-a"></slot></a>
+        </li>
+        <li>
+          <a><slot name="item-b"></slot></a>
+        </li>
+        <li>
+          <a><slot name="item-c"></slot></a>
         </li>
       </ol>
     </template>
