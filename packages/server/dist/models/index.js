@@ -17,6 +17,8 @@ var models_exports = {};
 module.exports = __toCommonJS(models_exports);
 __reExport(models_exports, require("./goal"), module.exports);
 __reExport(models_exports, require("./journal"), module.exports);
+var import_mongo = require("../services/mongo");
+(0, import_mongo.connect)("cluster0");
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./goal"),

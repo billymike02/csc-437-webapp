@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
-import { getJournal } from "./models/services/journal-svc";
 import { JournalPage } from "./pages/journal";
+import { connect } from "./services/mongo";
+import { get } from "http";
+import Journals from "./services/journal-svc";
+
+connect("blazing");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,10 +18,12 @@ app.get("/hello", (req: Request, res: Response) => {
 
 app.get("/journal/:journalTitle", (req: Request, res: Response) => {
   const { journalTitle } = req.params;
-  const data = getJournal(journalTitle);
-  const page = new JournalPage(data);
 
-  res.set("Content-Type", "text/html").send(page.render());
+  Journals.get(journalTitle).then((data) => {
+    const page = new JournalPage(data);
+
+    res.set("Content-Type", "text/html").send(page.render());
+  });
 });
 
 app.listen(port, () => {
