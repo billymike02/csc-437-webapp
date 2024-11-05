@@ -10,30 +10,46 @@ const JournalSchema = new Schema<Journal>({
 
 const JournalModel = model<Journal>("Temp", JournalSchema);
 
-const journals = {
-  daily_journal: {
-    title: "Daily Journal",
-    startDate: new Date("2024-10-14"),
-    endDate: new Date("2025-10-14"),
-    entries: [
-      {
-        date: new Date("2024-10-14"),
-        subject: "Started my journal",
-      },
-    ],
-  },
-};
-
 function index(): Promise<Journal[]> {
   return JournalModel.find();
 }
 
-function get(journalTitle: string): Promise<Journal> {
-  return JournalModel.find({ journalTitle })
-    .then((list) => list[0])
+function get(journalid: string): Promise<Journal> {
+  return JournalModel.findById(journalid)
+    .then((journal) => {
+      if (!journal) {
+        throw new Error(`Journal with ID ${journalid} not found`);
+      }
+      return journal; // Return the found journal
+    })
     .catch((err) => {
-      throw `${journalTitle} Not Found`;
+      // Log the actual error for debugging purposes
+      console.error(err);
+      throw new Error("An error occurred while retrieving the journal");
     });
 }
 
-export default { index, get };
+function create(json: Journal): Promise<Journal> {
+  const j = new JournalModel(json);
+  return j.save();
+}
+
+function update(journalid: string, journal: Journal): Promise<Journal> {
+  return JournalModel.findOneAndUpdate({ _id: journalid }, journal, {
+    new: true,
+    useFindAndModify: false, // Optional: depending on your Mongoose version
+  }).then((updated) => {
+    if (!updated) {
+      throw new Error(`Journal with ID ${journalid} not found for update`);
+    }
+    return updated as Journal; // Ensure this matches your Journal type
+  });
+}
+
+function remove(journalid: String): Promise<void> {
+  return JournalModel.findOneAndDelete({ _id: journalid }).then((deleted) => {
+    if (!deleted) throw `${journalid} not deleted`;
+  });
+}
+
+export default { index, get, create, update, remove };

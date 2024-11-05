@@ -29,25 +29,39 @@ const JournalSchema = new import_mongoose.Schema({
   entries: { type: [] }
 });
 const JournalModel = (0, import_mongoose.model)("Temp", JournalSchema);
-const journals = {
-  daily_journal: {
-    title: "Daily Journal",
-    startDate: /* @__PURE__ */ new Date("2024-10-14"),
-    endDate: /* @__PURE__ */ new Date("2025-10-14"),
-    entries: [
-      {
-        date: /* @__PURE__ */ new Date("2024-10-14"),
-        subject: "Started my journal"
-      }
-    ]
-  }
-};
 function index() {
   return JournalModel.find();
 }
-function get(journalTitle) {
-  return JournalModel.find({ journalTitle }).then((list) => list[0]).catch((err) => {
-    throw `${journalTitle} Not Found`;
+function get(journalid) {
+  return JournalModel.findById(journalid).then((journal) => {
+    if (!journal) {
+      throw new Error(`Journal with ID ${journalid} not found`);
+    }
+    return journal;
+  }).catch((err) => {
+    console.error(err);
+    throw new Error("An error occurred while retrieving the journal");
   });
 }
-var journal_svc_default = { index, get };
+function create(json) {
+  const j = new JournalModel(json);
+  return j.save();
+}
+function update(journalid, journal) {
+  return JournalModel.findOneAndUpdate({ _id: journalid }, journal, {
+    new: true,
+    useFindAndModify: false
+    // Optional: depending on your Mongoose version
+  }).then((updated) => {
+    if (!updated) {
+      throw new Error(`Journal with ID ${journalid} not found for update`);
+    }
+    return updated;
+  });
+}
+function remove(journalid) {
+  return JournalModel.findOneAndDelete({ _id: journalid }).then((deleted) => {
+    if (!deleted) throw `${journalid} not deleted`;
+  });
+}
+var journal_svc_default = { index, get, create, update, remove };
