@@ -8,7 +8,7 @@ const JournalSchema = new Schema<Journal>({
   entries: { type: [] },
 });
 
-const JournalModel = model<Journal>("Temp", JournalSchema);
+const JournalModel = model<Journal>("JournalSchema", JournalSchema);
 
 function index(): Promise<Journal[]> {
   return JournalModel.find();

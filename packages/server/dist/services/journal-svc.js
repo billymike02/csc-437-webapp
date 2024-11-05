@@ -28,7 +28,7 @@ const JournalSchema = new import_mongoose.Schema({
   endDate: { type: Date, required: false },
   entries: { type: [] }
 });
-const JournalModel = (0, import_mongoose.model)("Temp", JournalSchema);
+const JournalModel = (0, import_mongoose.model)("JournalSchema", JournalSchema);
 function index() {
   return JournalModel.find();
 }
