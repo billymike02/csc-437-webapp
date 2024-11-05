@@ -48,7 +48,16 @@ class JournalPage {
   }
   renderBody() {
     const { title, startDate, endDate, entries } = this.data;
-    return import_server.html` <span>Idk man</span> `;
+    const formattedDate = startDate.toLocaleDateString();
+    const numEntries = entries?.length || 0;
+    return import_server.html`
+      <div style="display: flex; flex-direction: column;">
+        <test-list src="/api/journals/672a6ce29157077895601de8"> </test-list>
+        <span>Journal Title: ${title}</span>
+        <span>Start Date: ${formattedDate}</span>
+        <span>Number of entries: ${numEntries}</span>
+      </div>
+    `;
   }
 }
 // Annotate the CommonJS export names for ESM import in node:

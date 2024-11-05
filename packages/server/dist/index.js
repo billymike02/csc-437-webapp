@@ -22,17 +22,26 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
+var import_journal = require("./pages/journal");
 var import_mongo = require("./services/mongo");
+var import_journal_svc = __toESM(require("./services/journal-svc"));
 var import_journals = require("./routes/journals");
 (0, import_mongo.connect)("blazing");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
+console.log("Hey there gooner:", staticDir);
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
 app.use("/api/journals", import_journals.journals);
 app.get("/hello", (req, res) => {
   res.send("Hello, World");
+});
+app.get("/journal/:journalid", async (req, res) => {
+  const { journalid } = req.params;
+  const data = await import_journal_svc.default.get(journalid);
+  const page = new import_journal.JournalPage(data);
+  res.set("Content-Type", "text/html").send(page.render());
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
