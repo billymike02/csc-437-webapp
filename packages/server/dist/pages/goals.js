@@ -41,7 +41,11 @@ class GoalsPage {
   render() {
     return (0, import_renderPage.default)({
       body: this.renderBody(),
-      stylesheets: ["/styles/journal.css"],
+      stylesheets: [
+        "/styles/reset.css",
+        "/styles/tokens.css",
+        "/styles/styles.css"
+      ],
       styles: [import_server.css``],
       scripts: [``]
     });
@@ -49,18 +53,69 @@ class GoalsPage {
   renderBody() {
     const goals = this.data;
     return import_server.html`
-      ${goals.map((goal) => {
+      <header>
+        <nav>
+          <a href="/">
+            <svg class="icon">
+              <use href="/icons/arrows.svg#arrow-back" />
+            </svg>
+            <span>Home</span>
+          </a>
+        </nav>
+
+        <h1>Goals</h1>
+      </header>
+      <main style="display: flex; justify-content: center;">
+        <ol class="custom-list">
+          ${goals.map((goal) => {
       const startDate = goal.startDate ? goal.startDate.toLocaleDateString() : "N/A";
       const endDate = goal.endDate ? goal.endDate.toLocaleDateString() : "N/A";
       return import_server.html`
-          <div style="display: flex; flex-direction: column;">
-            <span>Goal Name: ${goal.name}</span>
-            <span>Start Date: ${startDate}</span>
-            <span>End Date: ${endDate}</span>
-          </div>
-        `;
+              <li>
+                <a style="display: flex; justify-content: space-between;">
+                  <span>${goal.name}</span>
+                  <span>Started: ${startDate}</span>
+                  <span>Ending: ${endDate}</span>
+                </a>
+              </li>
+            `;
     })}
-      <a href="/">Back</a>
+          <li>
+            <form id="create-new-form">
+              <button
+                type="submit"
+                style="background: none; border: none; cursor: pointer;"
+              >
+                Create New
+              </button>
+            </form>
+          </li>
+        </ol>
+      </main>
+      <script>
+        document
+          .getElementById("create-new-form")
+          .addEventListener("submit", (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            fetch("/api/goals/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name: "New Goal" }),
+            })
+              .then((response) => {
+                if (response.ok) {
+                  alert("Goal created successfully!");
+                  window.location.reload();
+                } else {
+                  alert("Failed to create goal.");
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+          });
+      </script>
     `;
   }
 }
