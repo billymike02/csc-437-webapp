@@ -33,10 +33,19 @@ app.get("/journal/:journalid", async (req: Request, res: Response) => {
 });
 
 app.get("/goals/", async (req: Request, res: Response) => {
-  const { goalid } = req.params;
   const data = await Goals.index();
 
   const page = new GoalsPage(data);
+
+  res.set("Content-Type", "text/html").send(page.render());
+});
+
+app.get("/journals/", async (req: Request, res: Response) => {
+  const data = await Journals.index();
+
+  const journal = data[0];
+
+  const page = new JournalPage(journal);
 
   res.set("Content-Type", "text/html").send(page.render());
 });

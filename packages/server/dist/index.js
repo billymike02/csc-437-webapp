@@ -44,9 +44,14 @@ app.get("/journal/:journalid", async (req, res) => {
   res.set("Content-Type", "text/html").send(page.render());
 });
 app.get("/goals/", async (req, res) => {
-  const { goalid } = req.params;
   const data = await import_goal_svc.default.index();
   const page = new import_goals2.GoalsPage(data);
+  res.set("Content-Type", "text/html").send(page.render());
+});
+app.get("/journals/", async (req, res) => {
+  const data = await import_journal_svc.default.index();
+  const journal = data[0];
+  const page = new import_journal.JournalPage(journal);
   res.set("Content-Type", "text/html").send(page.render());
 });
 app.listen(port, () => {
