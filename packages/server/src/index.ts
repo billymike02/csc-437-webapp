@@ -6,7 +6,8 @@ import Journals from "./services/journal-svc";
 import Goals from "./services/goal-svc";
 import { journals } from "./routes/journals";
 import { goals } from "./routes/goals";
-import { GoalPage } from "./pages/goal";
+
+import { GoalsPage } from "./pages/goals";
 
 connect("blazing");
 
@@ -22,10 +23,6 @@ app.use(express.json());
 app.use("/api/journals", journals);
 app.use("/api/goals", goals);
 
-app.get("/hello", (req: Request, res: Response) => {
-  res.send("Hello, World");
-});
-
 // This function will fetch a journal by the ID to display it
 app.get("/journal/:journalid", async (req: Request, res: Response) => {
   const { journalid } = req.params;
@@ -35,10 +32,11 @@ app.get("/journal/:journalid", async (req: Request, res: Response) => {
   res.set("Content-Type", "text/html").send(page.render());
 });
 
-app.get("/goal/:goalid", async (req: Request, res: Response) => {
+app.get("/goals/", async (req: Request, res: Response) => {
   const { goalid } = req.params;
-  const data = await Goals.get(goalid);
-  const page = new GoalPage(data);
+  const data = await Goals.index();
+
+  const page = new GoalsPage(data);
 
   res.set("Content-Type", "text/html").send(page.render());
 });

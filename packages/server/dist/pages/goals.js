@@ -26,14 +26,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var goal_exports = {};
-__export(goal_exports, {
-  GoalPage: () => GoalPage
+var goals_exports = {};
+__export(goals_exports, {
+  GoalsPage: () => GoalsPage
 });
-module.exports = __toCommonJS(goal_exports);
+module.exports = __toCommonJS(goals_exports);
 var import_server = require("@calpoly/mustang/server");
 var import_renderPage = __toESM(require("./renderPage"));
-class GoalPage {
+class GoalsPage {
   data;
   constructor(data) {
     this.data = data;
@@ -47,20 +47,24 @@ class GoalPage {
     });
   }
   renderBody() {
-    const { name, startDate, endDate } = this.data;
-    const formattedDate = startDate?.toLocaleDateString() || "No start date.";
-    const formattedEndDate = endDate?.toLocaleDateString() || "No end date.";
+    const goals = this.data;
     return import_server.html`
-      <div style="display: flex; flex-direction: column;">
-        <test-list src="/api/journals/672a6ce29157077895601de8"> </test-list>
-        <span>Goal Name: ${name}</span>
-        <span>Start Date: ${formattedDate}</span>
-        <span>End Date: ${formattedEndDate}</span>
-      </div>
+      ${goals.map((goal) => {
+      const startDate = goal.startDate ? goal.startDate.toLocaleDateString() : "N/A";
+      const endDate = goal.endDate ? goal.endDate.toLocaleDateString() : "N/A";
+      return import_server.html`
+          <div style="display: flex; flex-direction: column;">
+            <span>Goal Name: ${goal.name}</span>
+            <span>Start Date: ${startDate}</span>
+            <span>End Date: ${endDate}</span>
+          </div>
+        `;
+    })}
+      <a href="/">Back</a>
     `;
   }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  GoalPage
+  GoalsPage
 });
