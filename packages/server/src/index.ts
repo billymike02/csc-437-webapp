@@ -7,6 +7,7 @@ import Journals from "./services/journal-svc";
 import Goals from "./services/goal-svc";
 import { journals } from "./routes/journals";
 import { goals } from "./routes/goals";
+import { friends } from "./routes/friends";
 
 import { GoalsPage } from "./pages/goals";
 
@@ -23,6 +24,7 @@ app.use(express.json());
 
 app.use("/api/journals", journals);
 app.use("/api/goals", goals);
+app.use("/api/friends", friends);
 
 // This function will fetch a journal by the ID to display it
 app.get("/journals/:journalid", async (req: Request, res: Response) => {

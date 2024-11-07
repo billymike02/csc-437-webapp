@@ -47,6 +47,25 @@
         }
       };
 
+      const loadFriends = async () => {
+        try {
+          const response = await fetch("/api/friends/");
+          const data = await response.json();
+
+          // Get the container where the components will be added
+          const friendsContainer = document.querySelector(".misc-container");
+
+          // Loop through each friend in the list and create a test-list component
+          data.forEach((friend) => {
+            const testListComponent = document.createElement("test-list");
+            testListComponent.setAttribute("src", `/api/friends/${friend._id}`);
+            friendsContainer.appendChild(testListComponent);
+          });
+        } catch (error) {
+          console.error("Error loading friends:", error);
+        }
+      };
+
       // Add event listener to body after DOM content is loaded
       document.addEventListener("DOMContentLoaded", () => {
         // Apply the theme immediately when the page loads
@@ -58,6 +77,8 @@
           toggleCheckbox.checked = localStorage.getItem("theme") === "light"; // Set checkbox based on theme
           toggleCheckbox.addEventListener("change", toggleDarkMode);
         }
+
+        loadFriends();
       });
     </script>
 
@@ -150,13 +171,8 @@
           </li>
         </ol>
       </div>
-      <div class="misc-container">
+      <div class="misc-container" style="flex-direction: column">
         <h1>Friend Activity</h1>
-        <test-list>
-          <span slot="item-a">Courtney Aitken</span>
-          <span slot="item-b">Jacob Krynock</span>
-          <span slot="item-c">Abe Muldrow</span>
-        </test-list>
       </div>
     </div>
   </body>

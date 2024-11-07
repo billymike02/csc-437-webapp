@@ -29,6 +29,7 @@ var import_journal_svc = __toESM(require("./services/journal-svc"));
 var import_goal_svc = __toESM(require("./services/goal-svc"));
 var import_journals2 = require("./routes/journals");
 var import_goals = require("./routes/goals");
+var import_friends = require("./routes/friends");
 var import_goals2 = require("./pages/goals");
 (0, import_mongo.connect)("blazing");
 const app = (0, import_express.default)();
@@ -38,6 +39,7 @@ app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
 app.use("/api/journals", import_journals2.journals);
 app.use("/api/goals", import_goals.goals);
+app.use("/api/friends", import_friends.friends);
 app.get("/journals/:journalid", async (req, res) => {
   const { journalid } = req.params;
   const data = await import_journal_svc.default.get(journalid);

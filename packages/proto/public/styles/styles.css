@@ -211,3 +211,7 @@ body.light-mode div.wrapper > div {
 body.light-mode a.profile-dropdown {
   background-color: gray;
 }
+
+span {
+  display: block;
+}
