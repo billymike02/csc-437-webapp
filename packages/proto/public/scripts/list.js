@@ -46,6 +46,10 @@ export class AccommodationElement extends HTMLElement {
       gap: var(--gap-regular);
     }
 
+    body.light-mode ol li a {
+      background-color: brown;
+    }
+
     ol li a:hover {
       scale: var(--animated-scale);
     }
