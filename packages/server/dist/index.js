@@ -23,10 +23,11 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var import_express = __toESM(require("express"));
 var import_journal = require("./pages/journal");
+var import_journals = require("./pages/journals");
 var import_mongo = require("./services/mongo");
 var import_journal_svc = __toESM(require("./services/journal-svc"));
 var import_goal_svc = __toESM(require("./services/goal-svc"));
-var import_journals = require("./routes/journals");
+var import_journals2 = require("./routes/journals");
 var import_goals = require("./routes/goals");
 var import_goals2 = require("./pages/goals");
 (0, import_mongo.connect)("blazing");
@@ -35,9 +36,9 @@ const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
-app.use("/api/journals", import_journals.journals);
+app.use("/api/journals", import_journals2.journals);
 app.use("/api/goals", import_goals.goals);
-app.get("/journal/:journalid", async (req, res) => {
+app.get("/journals/:journalid", async (req, res) => {
   const { journalid } = req.params;
   const data = await import_journal_svc.default.get(journalid);
   const page = new import_journal.JournalPage(data);
@@ -50,8 +51,7 @@ app.get("/goals/", async (req, res) => {
 });
 app.get("/journals/", async (req, res) => {
   const data = await import_journal_svc.default.index();
-  const journal = data[0];
-  const page = new import_journal.JournalPage(journal);
+  const page = new import_journals.JournalsPage(data);
   res.set("Content-Type", "text/html").send(page.render());
 });
 app.listen(port, () => {

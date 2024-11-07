@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { JournalPage } from "./pages/journal";
+import { JournalsPage } from "./pages/journals";
 import { connect } from "./services/mongo";
 import { get } from "http";
 import Journals from "./services/journal-svc";
@@ -24,7 +25,7 @@ app.use("/api/journals", journals);
 app.use("/api/goals", goals);
 
 // This function will fetch a journal by the ID to display it
-app.get("/journal/:journalid", async (req: Request, res: Response) => {
+app.get("/journals/:journalid", async (req: Request, res: Response) => {
   const { journalid } = req.params;
   const data = await Journals.get(journalid);
   const page = new JournalPage(data);
@@ -42,10 +43,7 @@ app.get("/goals/", async (req: Request, res: Response) => {
 
 app.get("/journals/", async (req: Request, res: Response) => {
   const data = await Journals.index();
-
-  const journal = data[0];
-
-  const page = new JournalPage(journal);
+  const page = new JournalsPage(data);
 
   res.set("Content-Type", "text/html").send(page.render());
 });

@@ -49,9 +49,7 @@ function create(json) {
 }
 function update(journalid, journal) {
   return JournalModel.findOneAndUpdate({ _id: journalid }, journal, {
-    new: true,
-    useFindAndModify: false
-    // Optional: depending on your Mongoose version
+    new: true
   }).then((updated) => {
     if (!updated) {
       throw new Error(`Journal with ID ${journalid} not found for update`);

@@ -37,11 +37,11 @@ function create(json: Journal): Promise<Journal> {
 function update(journalid: string, journal: Journal): Promise<Journal> {
   return JournalModel.findOneAndUpdate({ _id: journalid }, journal, {
     new: true,
-    useFindAndModify: false, // Optional: depending on your Mongoose version
   }).then((updated) => {
     if (!updated) {
       throw new Error(`Journal with ID ${journalid} not found for update`);
     }
+
     return updated as Journal; // Ensure this matches your Journal type
   });
 }

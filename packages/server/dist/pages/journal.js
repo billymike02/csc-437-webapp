@@ -51,13 +51,13 @@ class JournalPage {
     });
   }
   renderBody() {
-    const { title, startDate, endDate, entries } = this.data;
+    const { _id, title, startDate, endDate, entries } = this.data;
     const formattedDate = startDate.toLocaleDateString();
     const numEntries = entries?.length || 0;
     return import_server.html`
       <header>
         <nav>
-          <a href="/">
+          <a href="/journals/">
             <svg class="icon">
               <use href="/icons/arrows.svg#arrow-back" />
             </svg>
@@ -93,25 +93,42 @@ At w3schools.com you will learn how to make a website. They offer free tutorials
           .addEventListener("submit", (event) => {
             event.preventDefault(); // Prevent the default form submission
 
-            fetch("/api/journals/", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                title: "My New Journal",
-                startDate: "2024-11-04T14:30:00Z",
-              }),
-            })
-              .then((response) => {
-                if (response.ok) {
-                  alert("Entry appended successfully!");
-                  window.location.reload();
-                } else {
-                  alert("Failed to append entry.");
-                }
+            fetch("/api/journals/${_id.toString()}") // Adjust the URL as needed
+              .then((response) => response.json())
+              .then((data) => {
+                // Assuming the entries are part of the response body
+                const currentEntries = data.entries || []; // Default to empty array if no entries found
+
+                // Get the new entry from the textarea
+                const newEntry = document.getElementById("w3review").value;
+
+                // Append the new entry to the current entries
+                const updatedEntries = [...currentEntries, newEntry];
+
+                // Send the updated entries array in the PUT request
+                fetch("/api/journals/${_id.toString()}", {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    entries: updatedEntries,
+                    title: "stinky2", // Assuming title is fixed for now
+                  }),
+                })
+                  .then((response) => {
+                    if (response.ok) {
+                      alert("Entry appended successfully!");
+                      window.location.reload(); // Reload to reflect changes
+                    } else {
+                      alert("Failed to append entry.");
+                    }
+                  })
+                  .catch((error) => console.error("Error:", error));
               })
-              .catch((error) => console.error("Error:", error));
+              .catch((error) =>
+                console.error("Error fetching current entries:", error)
+              );
           });
       </script>
     `;
