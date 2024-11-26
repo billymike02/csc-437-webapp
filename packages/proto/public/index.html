@@ -10,12 +10,18 @@
     </script>
 
     <script type="module">
-      import { define } from "@calpoly/mustang";
+      import {Auth, define} from "@calpoly/mustang";
       import { AccommodationElement } from "/scripts/list.js";
+      import { HeaderElement } from "/scripts/header.js";
+
 
       define({
         "test-list": AccommodationElement,
+        "mu-auth": Auth.Provider,
+        "blz-header": HeaderElement,
       });
+
+      HeaderElement.initializeOnce();
 
       const getTheme = () => {
         // If no theme is set in localStorage, set dark mode by default
@@ -97,83 +103,81 @@
     <link rel="stylesheet" href="/styles/tokens.css" />
     <link rel="stylesheet" href="/styles/styles.css" />
   </head>
-  <header>
-    <a class="profile-dropdown button" href="./profile.html">
-      <img src="https://dummyimage.com/512x512/fff/000.png&text=User" />
-      <span>Manage Profile</span>
-    </a>
-    <label onchange="toggleDarkMode">
-      <input type="checkbox" autocomplete="off" />
-      Light Mode
-    </label>
-  </header>
+
   <body class="dark-mode">
-    <div class="wrapper">
-      <div class="pages-container">
-        <ol class="entry-tab">
-          <h1>Personal Wellness!</h1>
-          <li>
-            <a href="/journals/">
-              Journal
-              <svg class="icon">
-                <use href="/icons/misc.svg#book" />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="/goals/">
-              Goals
-              <svg class="icon">
-                <use href="/icons/misc.svg#goal" />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="./habits.html">
-              Habits
-              <svg class="icon">
-                <use href="/icons/misc.svg#habit" />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="./physical.html">
-              Physical
-              <svg class="icon">
-                <use href="/icons/misc.svg#physical" />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="./metrics.html">
-              Metrics
-              <svg class="icon">
-                <use href="/icons/misc.svg#metric" />
-              </svg>
-            </a>
-          </li>
-        </ol>
+    <mu-auth provides="blazing:auth">
+
+      <blz-header>
+      </blz-header>
+
+      <div class="wrapper">
+        <div class="pages-container">
+          <ol class="entry-tab">
+            <h1>Personal Wellness!</h1>
+            <li>
+              <a href="/journals/">
+                Journal
+                <svg class="icon">
+                  <use href="/icons/misc.svg#book" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="/goals/">
+                Goals
+                <svg class="icon">
+                  <use href="/icons/misc.svg#goal" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./habits.html">
+                Habits
+                <svg class="icon">
+                  <use href="/icons/misc.svg#habit" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./physical.html">
+                Physical
+                <svg class="icon">
+                  <use href="/icons/misc.svg#physical" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./metrics.html">
+                Metrics
+                <svg class="icon">
+                  <use href="/icons/misc.svg#metric" />
+                </svg>
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="info-container">
+          <h1>Welcome back, Billy</h1>
+          <ol>
+            <li>
+              <h3>Account created:</h3>
+              Thursday, Oct 17, 2024
+            </li>
+            <li>
+              <h3>Last login:</h3>
+              Friday, Oct 18, 2024
+            </li>
+            <li>
+              <h3>Last activity:</h3>
+              Wednesday, Oct 16, 2024
+            </li>
+          </ol>
+        </div>
+        <div class="misc-container" style="flex-direction: column">
+          <h1>Friend Activity</h1>
+        </div>
       </div>
-      <div class="info-container">
-        <h1>Welcome back, Billy</h1>
-        <ol>
-          <li>
-            <h3>Account created:</h3>
-            Thursday, Oct 17, 2024
-          </li>
-          <li>
-            <h3>Last login:</h3>
-            Friday, Oct 18, 2024
-          </li>
-          <li>
-            <h3>Last activity:</h3>
-            Wednesday, Oct 16, 2024
-          </li>
-        </ol>
-      </div>
-      <div class="misc-container" style="flex-direction: column">
-        <h1>Friend Activity</h1>
-      </div>
-    </div>
+    </mu-auth>
+
   </body>
 </html>

@@ -15,18 +15,18 @@ function index(): Promise<Journal[]> {
 }
 
 function get(journalid: string): Promise<Journal> {
-  return JournalModel.findById(journalid)
-    .then((journal) => {
-      if (!journal) {
-        throw new Error(`Journal with ID ${journalid} not found`);
-      }
-      return journal; // Return the found journal
-    })
-    .catch((err) => {
-      // Log the actual error for debugging purposes
-      console.error(err);
-      throw new Error("An error occurred while retrieving the journal");
-    });
+    return JournalModel.findById(journalid)
+      .then((journal) => {
+        if (!journal) {
+          throw new Error(`Journal with ID ${journalid} not found`);
+        }
+        return journal; // Return the found journal
+      })
+      .catch((err) => {
+        // Log the actual error for debugging purposes
+        console.error(err);
+        throw new Error("An error occurred while retrieving the journal");
+      });
 }
 
 function create(json: Journal): Promise<Journal> {

@@ -8,8 +8,10 @@ import Goals from "./services/goal-svc";
 import { journals } from "./routes/journals";
 import { goals } from "./routes/goals";
 import { friends } from "./routes/friends";
+import auth, { authenticateUser } from "./routes/auth";
 
 import { GoalsPage } from "./pages/goals";
+import {LoginPage} from "./pages/auth";
 
 connect("blazing");
 
@@ -22,9 +24,15 @@ app.use(express.static(staticDir));
 // Middleware:
 app.use(express.json());
 
-app.use("/api/journals", journals);
-app.use("/api/goals", goals);
-app.use("/api/friends", friends);
+app.use("/api/journals", authenticateUser, journals);
+app.use("/api/goals", authenticateUser, goals);
+app.use("/api/friends", authenticateUser, friends);
+app.use("/auth", auth);
+
+app.get("/login", (req: Request, res: Response) => {
+  const page = new LoginPage();
+  res.set("Content-Type", "text/html").send(page.render());
+});
 
 // This function will fetch a journal by the ID to display it
 app.get("/journals/:journalid", async (req: Request, res: Response) => {
