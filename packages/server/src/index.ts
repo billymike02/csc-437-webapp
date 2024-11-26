@@ -12,6 +12,7 @@ import auth, { authenticateUser } from "./routes/auth";
 
 import { GoalsPage } from "./pages/goals";
 import {LoginPage} from "./pages/auth";
+import {ProfilePage} from "./pages/profile";
 
 connect("blazing");
 
@@ -47,6 +48,14 @@ app.get("/goals/", async (req: Request, res: Response) => {
   const data = await Goals.index();
 
   const page = new GoalsPage(data);
+
+  res.set("Content-Type", "text/html").send(page.render());
+});
+
+app.get("/profile/", async (req: Request, res: Response) => {
+  const data = "temp";
+
+  const page = new ProfilePage(data);
 
   res.set("Content-Type", "text/html").send(page.render());
 });

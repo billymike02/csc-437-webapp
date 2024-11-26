@@ -33,6 +33,7 @@ var import_friends = require("./routes/friends");
 var import_auth = __toESM(require("./routes/auth"));
 var import_goals2 = require("./pages/goals");
 var import_auth2 = require("./pages/auth");
+var import_profile = require("./pages/profile");
 (0, import_mongo.connect)("blazing");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
@@ -56,6 +57,11 @@ app.get("/journals/:journalid", async (req, res) => {
 app.get("/goals/", async (req, res) => {
   const data = await import_goal_svc.default.index();
   const page = new import_goals2.GoalsPage(data);
+  res.set("Content-Type", "text/html").send(page.render());
+});
+app.get("/profile/", async (req, res) => {
+  const data = "temp";
+  const page = new import_profile.ProfilePage(data);
   res.set("Content-Type", "text/html").send(page.render());
 });
 app.get("/journals/", async (req, res) => {

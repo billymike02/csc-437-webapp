@@ -23,7 +23,7 @@ __export(renderPage_exports, {
 module.exports = __toCommonJS(renderPage_exports);
 var import_server = require("@calpoly/mustang/server");
 const defaults = {
-  stylesheets: ["/styles/reset.css", "/styles/tokens.css", "/styles/page.css"],
+  stylesheets: ["/styles/reset.css", "/styles/tokens.css"],
   styles: [],
   scripts: [
     `import { define } from "@calpoly/mustang";

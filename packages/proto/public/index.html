@@ -13,12 +13,14 @@
       import {Auth, define} from "@calpoly/mustang";
       import { AccommodationElement } from "/scripts/list.js";
       import { HeaderElement } from "/scripts/header.js";
+      import {ProfileElement} from "/scripts/profile.js";
 
 
       define({
         "test-list": AccommodationElement,
         "mu-auth": Auth.Provider,
         "blz-header": HeaderElement,
+        "profile-element": ProfileElement
       });
 
       HeaderElement.initializeOnce();
@@ -111,6 +113,7 @@
       </blz-header>
 
       <div class="wrapper">
+
         <div class="pages-container">
           <ol class="entry-tab">
             <h1>Personal Wellness!</h1>
