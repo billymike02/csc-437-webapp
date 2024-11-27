@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+<!--    <script type="module">-->
+<!--      import {Auth, define} from "@calpoly/mustang";-->
+<!--      import { AccommodationElement } from "/scripts/list.js";-->
+<!--      import { HeaderElement } from "/scripts/header.js";-->
+<!--      import {ProfileElement} from "/scripts/profile.js";-->
+
+
+<!--      define({-->
+<!--        "test-list": AccommodationElement,-->
+<!--        "mu-auth": Auth.Provider,-->
+<!--        "blz-header": HeaderElement,-->
+<!--        "profile-element": ProfileElement-->
+<!--      });-->
+
+<!--      HeaderElement.initializeOnce();-->
+
+<!--      const getTheme = () => {-->
+<!--        // If no theme is set in localStorage, set dark mode by default-->
+<!--        if (localStorage.getItem("theme") === null) {-->
+<!--          localStorage.setItem("theme", "dark");-->
+<!--        }-->
+
+<!--        // Apply the theme to the body-->
+<!--        const theme = localStorage.getItem("theme");-->
+<!--        if (theme === "dark") {-->
+<!--          document.body.classList.add("dark-mode");-->
+<!--          document.body.classList.remove("light-mode");-->
+<!--        } else {-->
+<!--          document.body.classList.add("light-mode");-->
+<!--          document.body.classList.remove("dark-mode");-->
+<!--        }-->
+<!--      };-->
+
+<!--      // Event handler for dark mode toggle-->
+<!--      const toggleDarkMode = (event) => {-->
+<!--        if (event.target.checked) {-->
+<!--          document.body.classList.add("light-mode");-->
+<!--          document.body.classList.remove("dark-mode");-->
+<!--          localStorage.setItem("theme", "light");-->
+<!--        } else {-->
+<!--          document.body.classList.add("dark-mode");-->
+<!--          document.body.classList.remove("light-mode");-->
+<!--          localStorage.setItem("theme", "dark");-->
+<!--        }-->
+<!--      };-->
+
+<!--      const loadFriends = async () => {-->
+<!--        try {-->
+<!--          const response = await fetch("/api/friends/");-->
+<!--          const data = await response.json();-->
+
+<!--          // Get the container where the components will be added-->
+<!--          const friendsContainer = document.querySelector(".misc-container");-->
+
+<!--          // Loop through each friend in the list and create a test-list component-->
+<!--          data.forEach((friend) => {-->
+<!--            const testListComponent = document.createElement("test-list");-->
+<!--            testListComponent.setAttribute("src", `/api/friends/${friend._id}`);-->
+<!--            friendsContainer.appendChild(testListComponent);-->
+<!--          });-->
+<!--        } catch (error) {-->
+<!--          console.error("Error loading friends:", error);-->
+<!--        }-->
+<!--      };-->
+
+<!--      // Add event listener to body after DOM content is loaded-->
+<!--      document.addEventListener("DOMContentLoaded", () => {-->
+<!--        // Apply the theme immediately when the page loads-->
+<!--        getTheme();-->
+
+<!--        // Add event listener for toggling dark mode-->
+<!--        const toggleCheckbox = document.querySelector('input[type="checkbox"]');-->
+<!--        if (toggleCheckbox) {-->
+<!--          toggleCheckbox.checked = localStorage.getItem("theme") === "light"; // Set checkbox based on theme-->
+<!--          toggleCheckbox.addEventListener("change", toggleDarkMode);-->
+<!--        }-->
+
+<!--        loadFriends();-->
+<!--      });-->
+<!--    </script>-->
+
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/styles.css" />
+    <script type="module" crossorigin src="/assets/index-DgfM-gPX.js"></script>
+  </head>
+
+  <body class="dark-mode">
+    <mu-auth provides="blazing:auth">
+
+      <blazing-header></blazing-header>
+      <blazing-app></blazing-app>
+
+      <div class="wrapper">
+
+        <div class="pages-container">
+          <ol class="entry-tab">
+            <h1>Personal Wellness!</h1>
+            <li>
+              <a href="/journals/">
+                Journal
+                <svg class="icon">
+                  <use href="/icons/misc.svg#book" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="/goals/">
+                Goals
+                <svg class="icon">
+                  <use href="/icons/misc.svg#goal" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./habits.html">
+                Habits
+                <svg class="icon">
+                  <use href="/icons/misc.svg#habit" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./physical.html">
+                Physical
+                <svg class="icon">
+                  <use href="/icons/misc.svg#physical" />
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="./metrics.html">
+                Metrics
+                <svg class="icon">
+                  <use href="/icons/misc.svg#metric" />
+                </svg>
+              </a>
+            </li>
+          </ol>
+        </div>
+        <div class="info-container">
+          <h1>Welcome back, Billy</h1>
+          <ol>
+            <li>
+              <h3>Account created:</h3>
+              Thursday, Oct 17, 2024
+            </li>
+            <li>
+              <h3>Last login:</h3>
+              Friday, Oct 18, 2024
+            </li>
+            <li>
+              <h3>Last activity:</h3>
+              Wednesday, Oct 16, 2024
+            </li>
+          </ol>
+        </div>
+        <div class="misc-container" style="flex-direction: column">
+          <h1>Friend Activity</h1>
+        </div>
+      </div>
+    </mu-auth>
+
+  </body>
+</html>
