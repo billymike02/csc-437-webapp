@@ -1,11 +1,11 @@
 import {css, html} from "@calpoly/mustang/server";
-import {Profile} from "models";
 import renderPage from "./renderPage";
+import {Friend} from "../models/friend";
 
 export class ProfilePage {
-    data: Profile;
+    data: Friend;
 
-    constructor(data: Profile) {
+    constructor(data: Friend) {
         this.data = data;
     }
 

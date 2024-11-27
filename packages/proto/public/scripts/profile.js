@@ -20,58 +20,20 @@ export class ProfileElement extends HTMLElement {
     <section class="view">
       <slot name="avatar"></slot>
       <button id="edit">Edit</button>
-      <h1><slot name="name"></slot></h1>
+      <h1><slot name="displayName"></slot></h1>
       <dl>
-        <dt>Username</dt>
-        <dd><slot name="userid"></slot></dd>
-        <dt>Nickname</dt>
-        <dd><slot name="nickname"></slot></dd>
-        <dt>Home City</dt>
-        <dd><slot name="home"></slot></dd>
-        <dt>Airports</dt>
-        <dd><slot name="airports"></slot></dd>
-        <dt>Favorite Color</dt>
-        <dd>
-          <slot name="color-swatch">
-            <span
-              class="swatch"
-              style="background: rebeccapurple"></span>
-          </slot>
-          <slot name="color-name">rebeccapurple</slot>
-        </dd>
+        <dt>User ID:&nbsp</dt>
+        <dd><slot name="_id"></slot></dd>
+
+        
       </dl>
     </section>
     <mu-form class="edit">
       <label>
-        <span>Username</span>
-        <input name="userid" />
+        <span>Display Name</span>
+        <input name="displayName" />
       </label>
-      <label>
-        <span>Avatar</span>
-        <input type="file" name="_avatar" />
-      </label>
-      <label>
-        <span>Name</span>
-        <input name="name" />
-      </label>
-      <label>
-        <span>Nickname</span>
-        <input name="nickname" />
-      </label>
-      <label>
-        <span>Home City</span>
-        <input name="home" />
-      </label>
-      <label>
-        <span>Airports</span>
-        <input-array name="airports">
-          <span slot="label-add">Add an airport</span>
-        </input-array>
-      </label>
-      <label>
-        <span>Color</span>
-        <input type="color" name="color" />
-      </label>
+      
     </mu-form>
   </template>`;
 
@@ -155,9 +117,6 @@ export class ProfileElement extends HTMLElement {
         return this.shadowRoot.querySelector("mu-form.edit");
     }
 
-    get avatarInput() {
-        return this.shadowRoot.querySelector('input[type="file"]');
-    }
 
     get editButton() {
         return this.shadowRoot.getElementById("edit");
@@ -178,9 +137,6 @@ export class ProfileElement extends HTMLElement {
             () => (this.mode = "edit")
         );
 
-        this.avatarInput.addEventListener("change", (event) =>
-            this.handleAvatarSelected(event)
-        );
 
         this.addEventListener("mu-form:submit", (event) =>
             this.submit(this.src, event.detail)
@@ -226,9 +182,14 @@ export class ProfileElement extends HTMLElement {
         fetch(url, { headers: this.authorization })
             .then((res) => {
                 if (res.status !== 200) throw `Status: ${res.status}`;
+
+
+
                 return res.json();
             })
             .then((json) => {
+
+                console.log("hydrate", json);
                 this.renderSlots(json);
                 this.form.init = json;
             })
@@ -270,7 +231,6 @@ export class ProfileElement extends HTMLElement {
     submit(url, json) {
         const method = this.mode === "new" ? "POST" : "PUT";
 
-        if (this._avatar) json.avatar = this._avatar;
 
         fetch(url, {
             method,
