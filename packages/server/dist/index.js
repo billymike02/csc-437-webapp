@@ -31,6 +31,8 @@ var import_journals2 = require("./routes/journals");
 var import_goals = require("./routes/goals");
 var import_friends = require("./routes/friends");
 var import_auth = __toESM(require("./routes/auth"));
+var import_promises = __toESM(require("node:fs/promises"));
+var import_path = __toESM(require("path"));
 var import_goals2 = require("./pages/goals");
 var import_auth2 = require("./pages/auth");
 var import_profile = require("./pages/profile");
@@ -68,6 +70,12 @@ app.get("/journals/", async (req, res) => {
   const data = await import_journal_svc.default.index();
   const page = new import_journals.JournalsPage(data);
   res.set("Content-Type", "text/html").send(page.render());
+});
+app.use("/app", (req, res) => {
+  const indexHtml = import_path.default.resolve(staticDir, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then(
+    (html) => res.send(html)
+  );
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

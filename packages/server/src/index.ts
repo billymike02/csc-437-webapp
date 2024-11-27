@@ -9,6 +9,8 @@ import { journals } from "./routes/journals";
 import { goals } from "./routes/goals";
 import { friends } from "./routes/friends";
 import auth, { authenticateUser } from "./routes/auth";
+import fs from "node:fs/promises";
+import path from "path";
 
 import { GoalsPage } from "./pages/goals";
 import {LoginPage} from "./pages/auth";
@@ -65,6 +67,13 @@ app.get("/journals/", async (req: Request, res: Response) => {
   const page = new JournalsPage(data);
 
   res.set("Content-Type", "text/html").send(page.render());
+});
+
+app.use("/app", (req: Request, res: Response) => {
+  const indexHtml = path.resolve(staticDir, "index.html");
+  fs.readFile(indexHtml, { encoding: "utf8" }).then((html) =>
+      res.send(html)
+  );
 });
 
 app.listen(port, () => {

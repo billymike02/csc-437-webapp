@@ -13,6 +13,7 @@ export class HomeViewElement extends LitElement {
       <main class="page">
         <header>
           <h2><a>Your Trips</a></h2>
+            <a href="/app/profile">Link</a>
         </header>
 
       </main>
