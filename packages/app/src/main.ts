@@ -1,4 +1,7 @@
-import { Auth, define, History, Switch } from "@calpoly/mustang";
+import { Auth, define, History, Switch, Store } from "@calpoly/mustang";
+import { Msg } from "./messages";
+import { Model, init } from "./model";
+import update from "./update";
 import { html, LitElement} from "lit";
 import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
@@ -38,7 +41,15 @@ class AppElement extends LitElement {
             constructor() {
                 super(routes, "blazing:history", "blazing:auth");
             }
-        }
+        },
+        "mu-store": class AppStore extends Store.Provider<
+            Model,
+            Msg
+        > {
+            constructor() {
+                super(update, init, "blazing:auth");
+            }
+        },
     });
 
     protected render() {
@@ -50,7 +61,7 @@ class AppElement extends LitElement {
 
     connectedCallback(): void {
         super.connectedCallback();
-        BlazingHeaderElement.initializeOnce();
+        // BlazingHeaderElement.initializeOnce();
     }
 }
 
