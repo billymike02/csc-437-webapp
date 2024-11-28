@@ -19,12 +19,13 @@ export class BlazingHeaderElement extends LitElement {
         return html`
       <header>
         <!-- TODO: insert contents of header here -->
-          <span>A header</span>
-          <drop-down>
-              <a slot="actuator">
-                  Hello,
-                  <span id="userid">User</span>
-              </a>
+          <drop-down  >
+              <div slot="actuator" class="nameButt">
+                  <a >
+                      <span id="userid">My Profile</span>
+                  </a>
+              </div>
+             
               <menu>
                   <li>
                       <label @change=${toggleDarkMode}>
@@ -42,24 +43,68 @@ export class BlazingHeaderElement extends LitElement {
     `;
     }
 
-    static initializeOnce() {
-        function toggleDarkMode(
-            page: HTMLElement,
-            checked: boolean
-        ) {
-            page.classList.toggle("dark-mode", checked);
-        }
-
-        document.body.addEventListener("dark-mode", (event) =>
-            toggleDarkMode(
-                event.currentTarget as HTMLElement,
-                (event as CustomEvent).detail?.checked
-            )
-        );
-    }
 
     static styles = css`
-    /* TODO: Style the header here */
-  `;
+        :host {
+            display: contents;
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: var(--margin-standard);
+
+
+        }
+
+        header ~ * {
+
+        }
+
+        header p {
+
+        }
+        
+        .nameButt
+        {
+            background-color: var(--body-regular-color);
+            padding: var(--padding-standard);
+            border-radius: 50px;
+            width: 240px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            flex-basis: max-content;
+            align-items: end;
+            background-color: var(--button-color);
+            padding: var(--padding-standard);
+            border-radius: var(--rounded-corners-regular);
+        }
+
+        a[slot="actuator"] {
+
+            cursor: pointer;
+        }
+
+        #userid:empty::before {
+            content: "traveler";
+        }
+
+        menu a {
+
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        a:has(#userid:empty) ~ menu > .when-signed-in,
+        a:has(#userid:not(:empty)) ~ menu > .when-signed-out {
+            display: none;
+        }
+    `;
+
 }
 

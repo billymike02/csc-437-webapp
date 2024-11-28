@@ -1,5 +1,5 @@
 import { Auth, define, History, Switch } from "@calpoly/mustang";
-import { html, LitElement } from "lit";
+import { html, LitElement} from "lit";
 import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
 
@@ -30,6 +30,7 @@ const routes = [
 
 class AppElement extends LitElement {
 
+
     static uses = define({
         "home-view": HomeViewElement,
         "mu-history": History.Provider,
@@ -52,6 +53,8 @@ class AppElement extends LitElement {
         BlazingHeaderElement.initializeOnce();
     }
 }
+
+
 
 define({
     "mu-auth": Auth.Provider,

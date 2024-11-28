@@ -14,7 +14,7 @@ export class JournalsPage {
       body: this.renderBody(),
       stylesheets: [
         "/styles/reset.css",
-        "/styles/tokens.css",
+        "/styles/tokens.css.ts",
         "/styles/styles.css",
       ],
       styles: [css``],

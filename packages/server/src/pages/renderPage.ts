@@ -2,7 +2,7 @@
 import { PageParts, renderWithDefaults } from "@calpoly/mustang/server";
 
 const defaults = {
-  stylesheets: ["/styles/reset.css", "/styles/tokens.css"],
+  stylesheets: ["/styles/reset.css", "/styles/tokens.css.ts"],
   styles: [],
   scripts: [
     `import { define } from "@calpoly/mustang";
