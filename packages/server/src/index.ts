@@ -29,7 +29,7 @@ app.use(express.json());
 
 app.use("/api/journals", authenticateUser, journals);
 app.use("/api/goals", authenticateUser, goals);
-app.use("/api/friends", authenticateUser, friends);
+app.use("/api/friends", friends);
 app.use("/auth", auth);
 
 app.get("/login", (req: Request, res: Response) => {

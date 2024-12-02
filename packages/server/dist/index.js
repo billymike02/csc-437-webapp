@@ -44,7 +44,7 @@ app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
 app.use("/api/journals", import_auth.authenticateUser, import_journals2.journals);
 app.use("/api/goals", import_auth.authenticateUser, import_goals.goals);
-app.use("/api/friends", import_auth.authenticateUser, import_friends.friends);
+app.use("/api/friends", import_friends.friends);
 app.use("/auth", import_auth.default);
 app.get("/login", (req, res) => {
   const page = new import_auth2.LoginPage();

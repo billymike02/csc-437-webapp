@@ -25,6 +25,9 @@ function selectProfile(
     msg: { userid: string },
     user: Auth.User
 ) {
+
+
+
     return fetch(`/api/friends/${msg.userid}`, {
         headers: Auth.headers(user)
     })

@@ -23,21 +23,15 @@ __export(friend_svc_exports, {
 module.exports = __toCommonJS(friend_svc_exports);
 var import_mongoose = require("mongoose");
 const FriendSchema = new import_mongoose.Schema({
-  displayName: { type: String, required: true, trim: true }
+  username: { type: String, required: true, trim: true }
 });
 const FriendModel = (0, import_mongoose.model)("FriendSchema", FriendSchema);
 function index() {
   return FriendModel.find();
 }
-function get(friendid) {
-  return FriendModel.findById(friendid).then((friend) => {
-    if (!friend) {
-      throw new Error(`Goal with ID ${friendid} not found`);
-    }
-    return friend;
-  }).catch((err) => {
-    console.error(err);
-    throw new Error("An error occurred while retrieving the friend");
+function get(username) {
+  return FriendModel.find({ username }).then((list) => list[0]).catch(() => {
+    throw `${username} Not Found`;
   });
 }
 function create(json) {

@@ -1,47 +1,71 @@
-import { LitElement, css, html } from "lit";
-import {define, Dropdown, Events} from "@calpoly/mustang";
-
-function toggleDarkMode(ev: InputEvent) {
-    const target = ev.target as HTMLInputElement;
-    const checked = target.checked;
-
-    Events.relay(ev, "dark-mode", { checked });
-}
+import { css, html } from "lit";
+import {Auth, define, Dropdown, Observer, View} from "@calpoly/mustang";
+import { Msg } from "../messages";
+import { Model } from "../model";
+import { Friend} from "server/models";
+import {property, state} from "lit/decorators.js";
 
 
-export class BlazingHeaderElement extends LitElement {
+
+export class BlazingHeaderElement extends View<Model, Msg> {
     static uses = define({
         "drop-down": Dropdown.Element
     });
 
+    @property()
+    username = "anonymous";
+
+    @state()
+    get profile(): Friend | undefined {
+        return this.model.profile;
+    }
+
+    constructor() {
+        super("blazing:model");
+    }
+
+
+
+    connectedCallback() {
+        super.connectedCallback();
+        this._authObserver.observe(({ user }) => {
+            if (user && user.username !== this.username) {
+                this.username = user.username;
+                this.dispatchMessage([
+                    "profile/select",
+                    { userid: this.username }
+                ]);
+            }
+        });
+    }
 
     render() {
+
+        const { username } =
+        this.profile || {};
+
+        console.log("found username:", this.username);
+
+        const profileHref = `/app/profile/${username}`;
+
         return html`
       <header>
-        <!-- TODO: insert contents of header here -->
-          <drop-down  >
+ 
               <div slot="actuator" class="nameButt">
-                  <a >
-                      <span id="userid">My Profile</span>
+                  <a href=${profileHref}>
+                      <span id="userid">Hello, ${this.username}</span>
                   </a>
               </div>
              
-              <menu>
-                  <li>
-                      <label @change=${toggleDarkMode}>
-                          <input type="checkbox" />
-                          Dark Mode
-                      </label>
-                  </li>
 
-                  <li class="when-signed-out">
-                      <a href="/login">Sign In</a>
-                  </li>
-              </menu>
-          </drop-down>
       </header>
     `;
     }
+
+    _authObserver = new Observer<Auth.Model>(
+        this,
+        "blazing:auth"
+    );
 
 
     static styles = css`

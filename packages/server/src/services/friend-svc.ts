@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { Friend } from "../models/friend";
 
 const FriendSchema = new Schema<Friend>({
-  displayName: { type: String, required: true, trim: true },
+  username: { type: String, required: true, trim: true },
 });
 
 const FriendModel = model<Friend>("FriendSchema", FriendSchema);
@@ -11,19 +11,12 @@ function index(): Promise<Friend[]> {
   return FriendModel.find();
 }
 
-function get(friendid: string): Promise<Friend> {
-  return FriendModel.findById(friendid)
-    .then((friend) => {
-      if (!friend) {
-        throw new Error(`Goal with ID ${friendid} not found`);
-      }
-      return friend; // Return the found journal
-    })
-    .catch((err) => {
-      // Log the actual error for debugging purposes
-      console.error(err);
-      throw new Error("An error occurred while retrieving the friend");
-    });
+function get(username: string): Promise<Friend> {
+  return FriendModel.find({ username: username })
+      .then((list) => list[0])
+      .catch(() => {
+        throw `${username} Not Found`;
+      });
 }
 
 function create(json: Friend): Promise<Friend> {

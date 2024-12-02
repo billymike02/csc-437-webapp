@@ -19,6 +19,8 @@ friends.post("/", (req: Request, res: Response) => {
     .catch((err) => res.status(500).send(err));
 });
 
+// friendid now is the username from the credential
+
 friends.get("/:friendid", (req: Request, res: Response) => {
   const { friendid } = req.params;
 

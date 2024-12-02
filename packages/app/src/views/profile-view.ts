@@ -5,7 +5,7 @@ import { Friend } from "server/models";
 import { Msg } from "../messages";
 import { Model } from "../model";
 
-export class TravelerViewElement extends View<Model, Msg> {
+export class ProfileViewElement extends View<Model, Msg> {
     @property()
     userid?: string;
 
@@ -20,7 +20,7 @@ export class TravelerViewElement extends View<Model, Msg> {
 
     render() {
         return html`
-      <!-- your template/render code here -->
+            <span>Profile: ${this.userid}</span>
     `;
     }
 

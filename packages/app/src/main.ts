@@ -1,10 +1,14 @@
-import { Auth, define, History, Switch, Store } from "@calpoly/mustang";
+import {Auth, define, History, Switch, Store, Observer} from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
 import { html, LitElement} from "lit";
 import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
+import {ProfileViewElement} from "./views/profile-view.ts";
+import {LoginForm} from "./components/login-form";
+
+let _user = new Auth.User();
 
 const routes = [
     {
@@ -14,21 +18,32 @@ const routes = [
     `
     },
     {
+        auth: "protected",
         path: "/app",
         view: () => html`
             <home-view></home-view>
     `
     },
     {
-        path: "/app/profile",
-        view: () => html`
-            <span>Profile</span>
+        auth: "protected",
+        path: "/app/profile/:id",
+        view: (params: Switch.Params) => html`
+      <profile-view userid=${params.id}></profile-view>
     `
     },
     {
         path: "/",
         redirect: "/app"
+    },
+    {
+        path: "/app/journals/",
+        view: () => html`<span>Journals</span>`
+    },
+    {
+        path: "/app/login/",
+        view: () => html`<login-form></login-form>`
     }
+
 ];
 
 class AppElement extends LitElement {
@@ -36,6 +51,8 @@ class AppElement extends LitElement {
 
     static uses = define({
         "home-view": HomeViewElement,
+        "profile-view": ProfileViewElement,
+        "login-form": LoginForm,
         "mu-history": History.Provider,
         "mu-switch": class AppSwitch extends Switch.Element {
             constructor() {
@@ -59,9 +76,20 @@ class AppElement extends LitElement {
     `;
     }
 
-    connectedCallback(): void {
+    _authObserver = new Observer<Auth.Model>(
+        this,
+        "blazing:auth"
+    );
+
+
+
+    connectedCallback() {
         super.connectedCallback();
-        // BlazingHeaderElement.initializeOnce();
+        this._authObserver.observe(({ user }) => {
+            if (user) {
+                _user = user;
+            }
+        });
     }
 }
 

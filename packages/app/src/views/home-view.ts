@@ -240,7 +240,7 @@ export class HomeViewElement extends LitElement {
                   <ol class="entry-tab">
                       <h1>Personal Wellness!</h1>
                       <li>
-                          <a href="/journals/">
+                          <a href="/app/journals/">
                               Journal
                               <svg class="icon">
                                   <use href="/icons/misc.svg#book" />
@@ -282,7 +282,7 @@ export class HomeViewElement extends LitElement {
                   </ol>
               </div>
               <div class="info-container">
-                  <h1>Welcome back, Billy</h1>
+                  <h1>Welcome back</h1>
                   <ol>
                       <li>
                           <h3>Account created:</h3>
