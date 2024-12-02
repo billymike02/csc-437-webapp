@@ -9,6 +9,7 @@ export type Msg =
         onFailure?: (err: Error) => void;
     }]
     | ["profile/select", { userid: string }]
+    | ["journal/select", { journalid: string }]
     | ["journal/save",
         {
             journalid: string;

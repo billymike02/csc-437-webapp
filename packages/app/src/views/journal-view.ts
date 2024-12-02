@@ -5,11 +5,12 @@ import {
   InputArray,
   View
 } from "@calpoly/mustang"
-import { html, LitElement} from "lit";
+import { css, html, LitElement} from "lit";
 import {property, state} from "lit/decorators.js";
 import {Journal} from "server/models";
 import {Model} from "../model.ts";
 import {Msg} from "../messages.ts";
+import {resetCSS} from "../css/reset.ts"
 
 class JournalViewer extends LitElement {
   @property() // I think this gets set in HTML attribute
@@ -17,16 +18,72 @@ class JournalViewer extends LitElement {
 
   render() {
     return html`
-      <section>
-        <slot name="avatar"></slot>
-        <h1><slot name="name"></slot></h1>
+<!--      <section>-->
+        <h2>Your Journal</h2>
+        <div class="textContent">
+          <slot name="content"></slot>
+        </div>
+
         <nav>
-          <a href="${this.journalid}/edit" class="edit">Edit</a>
+          <a href="${this.journalid}/edit" class="edit">Edit Content</a>
         </nav>
-        <slot name="journalcontent"></slot>
-      </section>
+<!--      </section>-->
     `;
   }
+
+  static styles = [
+      css`
+        :host {
+          display: flex;
+          flex-direction: column;
+          justify-content: center; /* Center vertically */
+          align-items: center;    /* Center horizontally */
+          width: 100%;            /* Take full width of the parent */
+          height: 100%;           /* Take full height of the parent */
+          box-sizing: border-box; /* Include padding and border in width/height */
+        }
+
+        .textContent {
+          min-width: 50vw;/* Fixed width relative to the parent */
+          max-width: 50vw;        
+          min-height: 50vh;
+          max-height: 50vh;
+          background-color: var(--body-foreground-color);
+          border-radius: var(--rounded-corners-regular);
+          margin-bottom: var(--margin-standard);
+          padding: var(--padding-standard);
+
+          transition: var(--transition-regular);
+          
+        }
+        
+        .textContent:hover
+        {
+          scale: var(--animated-scale-small);
+        }
+
+
+
+        .edit {
+          color: var(--color-text-default);
+          font-weight: bold;
+          text-decoration: none;
+          padding: var(--padding-standard);
+          border-radius: var(--rounded-corners-regular);
+          background-color: var(--interactive-element-color);
+          
+        }
+        
+        nav
+        {
+          transition: var(--transition-regular);
+        }
+        
+        nav:hover {
+          scale: var(--animated-scale);
+        }
+      `
+  ]
 
 }
 
@@ -45,14 +102,72 @@ class JournalEditor extends LitElement {
       <section>
         <mu-form .init=${this.init}>
           <label>
-            <textarea name="content" placeholder="Sample text">
- 
+            <textarea name="content" class="textContent" placeholder="Sample text">
+
               </textarea>
           </label>
+          
         </mu-form>
       </section>
     `;
   }
+
+  static styles = [
+    css`
+        :host {
+          display: flex;
+          flex-direction: column;
+          justify-content: center; /* Center vertically */
+          align-items: center;    /* Center horizontally */
+          width: 100%;            /* Take full width of the parent */
+          height: 100%;           /* Take full height of the parent */
+          box-sizing: border-box; /* Include padding and border in width/height */
+        }
+
+        .textContent {
+          min-width: 50vw;/* Fixed width relative to the parent */
+          max-width: 50vw;        
+          min-height: 50vh;
+          max-height: 50vh;
+          background-color: var(--body-foreground-color);
+          border-radius: var(--rounded-corners-regular);
+          margin-bottom: var(--margin-standard);
+          padding: var(--padding-standard);
+          transition: var(--transition-regular);
+          font-size: medium;
+          color: var(--color-text-default);
+          border-width: 0;
+
+          
+        }
+        
+        .textContent:hover
+        {
+          scale: var(--animated-scale-small);
+        }
+
+
+
+        .edit {
+          color: var(--color-text-default);
+          font-weight: bold;
+          text-decoration: none;
+          padding: var(--padding-standard);
+          border-radius: var(--rounded-corners-regular);
+          background-color: var(--interactive-element-color);
+          
+        }
+        
+        nav
+        {
+          transition: var(--transition-regular);
+        }
+        
+        nav:hover {
+          scale: var(--animated-scale);
+        }
+      `
+  ]
 
 }
 
@@ -66,7 +181,7 @@ export class JournalViewElement extends View<Model, Msg> {
   edit = false;
 
   @property({ attribute: "journal-id", reflect: true })
-  userid = "";
+  journalid = "";
 
   @state()
   get journal(): Journal | undefined {
@@ -77,6 +192,7 @@ export class JournalViewElement extends View<Model, Msg> {
   constructor() {
     super("blazing:model");
   }
+
 
   attributeChangedCallback(
     name: string,
@@ -89,34 +205,39 @@ export class JournalViewElement extends View<Model, Msg> {
       oldValue !== newValue &&
       newValue
     ) {
-      console.log("Journaler Page:", newValue);
+
       this.dispatchMessage([
-        "profile/select",
-        { userid: newValue }
+        "journal/select",
+        { journalid: newValue }
       ]);
     }
+
+
   }
 
   render() {
 
-    // const {entries} = this.journal || {};
+    const { _id, content } = this.journal || {};
+
+    console.log("Journal has ID: ", _id);
+    console.log("Journal has structure: ", this.journal);
 
 
 
     return this.edit
       ? html`
           <journal-editor
-       
+
             .init=${this.journal}
             @mu-form:submit=${(
         event: Form.SubmitEvent<Journal>
       ) => this._handleSubmit(event)}>
-           
+
           </journal-editor>
         `
       : html`
-          <journal-viewer journalid="adminJournal">
-            <span>Hey</span>
+          <journal-viewer class="journalView" journalid=${_id}>
+            <span slot="content">${content}</span>
           </journal-viewer>
         `;
   }
@@ -139,5 +260,21 @@ export class JournalViewElement extends View<Model, Msg> {
       }
     ]);
   }
+
+  static styles = css`
+  :host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%; /* Fills the entire viewport height */
+    margin-bottom: 10%;
+
+
+  }
+
+`;
+
 
 }

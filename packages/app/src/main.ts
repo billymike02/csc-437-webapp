@@ -2,7 +2,7 @@ import {Auth, define, History, Switch, Store, Observer} from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
-import { html, LitElement} from "lit";
+import {css, html, LitElement} from "lit";
 import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
 import {ProfileViewElement} from "./views/profile-view.ts";
@@ -34,7 +34,7 @@ const routes = [
 
     {
         path: "/app/journals/",
-        view: () => html`<journal-view></journal-view>`
+        view: () => html`<journal-view class="journalView" journal-id="674e171fcdfafa1eeb94c694"></journal-view>`
     },
     {
         auth: "protected",
@@ -109,6 +109,7 @@ class AppElement extends LitElement {
             }
         });
     }
+
 }
 
 

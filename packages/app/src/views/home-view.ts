@@ -283,20 +283,7 @@ export class HomeViewElement extends LitElement {
               </div>
               <div class="info-container animated">
                   <h1>Welcome back</h1>
-                  <ol>
-                      <li>
-                          <h3>Account created:</h3>
-                          Thursday, Oct 17, 2024
-                      </li>
-                      <li>
-                          <h3>Last login:</h3>
-                          Friday, Oct 18, 2024
-                      </li>
-                      <li>
-                          <h3>Last activity:</h3>
-                          Wednesday, Oct 16, 2024
-                      </li>
-                  </ol>
+                  
               </div>
               <div class="misc-container animated" style="flex-direction: column">
                   <h1>Friend Activity</h1>

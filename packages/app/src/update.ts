@@ -10,12 +10,16 @@ export default function update(
 ) {
     switch (message[0]) {
         case "profile/select":
-            console.log("SWITCH CASE 1")
+
             selectProfile(message[1], user).then((profile) =>
                 apply((model) => ({ ...model, profile }))
             );
             break;
-
+        case "journal/select":
+            selectJournal(message[1], user).then((journal) =>
+                apply((model) => ({ ...model, journal }))
+            );
+            break;
         // put the rest of your cases here
         case "journal/save":
             console.log("saving journal")
@@ -69,7 +73,27 @@ function saveJournal(
         });
 }
 
+function selectJournal(
+    msg: { journalid: string },
+    user: Auth.User
+) {
 
+    return fetch(`/api/journals/${msg.journalid}`, {
+        headers: Auth.headers(user)
+    })
+        .then((response: Response) => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            return undefined;
+        })
+        .then((json: unknown) => {
+            if (json) {
+                console.log("Journal FOUNDDAWSDS:", json);
+                return json as Journal;
+            }
+        });
+}
 
 function selectProfile(
     msg: { userid: string },
