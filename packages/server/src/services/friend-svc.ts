@@ -3,6 +3,8 @@ import { Friend } from "../models/friend";
 
 const FriendSchema = new Schema<Friend>({
   username: { type: String, required: true, trim: true },
+  age: { type: Number, required: true },
+  weight: { type: Number, required: true },
 });
 
 const FriendModel = model<Friend>("FriendSchema", FriendSchema);

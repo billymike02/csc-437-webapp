@@ -23,7 +23,9 @@ __export(friend_svc_exports, {
 module.exports = __toCommonJS(friend_svc_exports);
 var import_mongoose = require("mongoose");
 const FriendSchema = new import_mongoose.Schema({
-  username: { type: String, required: true, trim: true }
+  username: { type: String, required: true, trim: true },
+  age: { type: Number, required: true },
+  weight: { type: Number, required: true }
 });
 const FriendModel = (0, import_mongoose.model)("FriendSchema", FriendSchema);
 function index() {

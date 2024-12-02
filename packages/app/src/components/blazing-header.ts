@@ -4,6 +4,7 @@ import { Msg } from "../messages";
 import { Model } from "../model";
 import { Friend} from "server/models";
 import {property, state} from "lit/decorators.js";
+import resetCSS from "../css/reset.ts";
 
 
 
@@ -50,13 +51,10 @@ export class BlazingHeaderElement extends View<Model, Msg> {
 
         return html`
       <header>
- 
-              <div slot="actuator" class="nameButt">
-                  <a href=${profileHref}>
-                      <span id="userid">Hello, ${this.username}</span>
+
+                  <a href=${profileHref} class="nameButt">
+                      <span id="userid">Logged in as ${this.username}</span>
                   </a>
-              </div>
-             
 
       </header>
     `;
@@ -68,7 +66,8 @@ export class BlazingHeaderElement extends View<Model, Msg> {
     );
 
 
-    static styles = css`
+    static styles = [resetCSS,
+        css`
         :host {
             display: contents;
         }
@@ -93,10 +92,17 @@ export class BlazingHeaderElement extends View<Model, Msg> {
         
         .nameButt
         {
-            background-color: var(--body-regular-color);
+            background-color: var(--interactive-element-color);
             padding: var(--padding-standard);
             border-radius: 50px;
             width: 240px;
+            transition: var(--transition-regular);
+        }
+            
+        .nameButt:hover {
+            scale: 1.1;
+            background-color: var(--interactive-element-color-inverted);
+            color: var(--color-text-default-inverted);
         }
 
         nav {
@@ -108,15 +114,8 @@ export class BlazingHeaderElement extends View<Model, Msg> {
             padding: var(--padding-standard);
             border-radius: var(--rounded-corners-regular);
         }
-
-        a[slot="actuator"] {
-
-            cursor: pointer;
-        }
-
-        #userid:empty::before {
-            content: "traveler";
-        }
+            
+            
 
         menu a {
 
@@ -124,11 +123,7 @@ export class BlazingHeaderElement extends View<Model, Msg> {
             text-decoration: underline;
         }
 
-        a:has(#userid:empty) ~ menu > .when-signed-in,
-        a:has(#userid:not(:empty)) ~ menu > .when-signed-out {
-            display: none;
-        }
-    `;
+    `];
 
 }
 

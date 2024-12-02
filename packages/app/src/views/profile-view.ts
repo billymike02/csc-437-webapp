@@ -19,8 +19,26 @@ export class ProfileViewElement extends View<Model, Msg> {
     }
 
     render() {
+
+        const {
+            username,
+            age,
+            weight,
+        } = this.profile || {};
+
+        if (this.profile == undefined)
+        {
+            return html`<h3>No profile found.</h3>`
+        }
+
+        const profileUrl = `wmwoodwa.csse.dev/app/profile/${username}`;
+
+
         return html`
-            <span>Profile: ${this.userid}</span>
+            <h3>Username: ${username}</h3>
+            <h3>Age: ${age || "N/A"}</h3>
+            <h3>Weight: ${weight || "N/A"}</h3>
+            <h3>Profile Link: ${profileUrl}</h3>
     `;
     }
 

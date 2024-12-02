@@ -1,6 +1,6 @@
 import { Auth, Observer } from "@calpoly/mustang";
 import { html, css, LitElement } from "lit";
-import reset from "../styles/reset.css";
+import resetCSS from "../css/reset.ts";
 
 
 
@@ -8,7 +8,7 @@ export class HomeViewElement extends LitElement {
 
     src = ""
 
-    static styles = [reset.styles, css`
+    static styles = [resetCSS, css`
       
         
         body {
@@ -97,7 +97,7 @@ export class HomeViewElement extends LitElement {
         }
 
         div.wrapper > div {
-            background-color: var(--body-regular-color);
+            background-color: var(--body-foreground-color);
             border-radius: 3rem;
             padding: 40px;
         }
@@ -187,7 +187,7 @@ export class HomeViewElement extends LitElement {
         }
 
         ol li a {
-            background-color: var(--button-color);
+            background-color: var(--interactive-element-color);
             color: var(--color-text-default);
             padding: var(--padding-standard);
             border-radius: var(--rounded-corners-regular);
@@ -236,7 +236,7 @@ export class HomeViewElement extends LitElement {
 
           <div class="wrapper">
 
-              <div class="pages-container">
+              <div class="pages-container animated">
                   <ol class="entry-tab">
                       <h1>Personal Wellness!</h1>
                       <li>
@@ -281,7 +281,7 @@ export class HomeViewElement extends LitElement {
                       </li>
                   </ol>
               </div>
-              <div class="info-container">
+              <div class="info-container animated">
                   <h1>Welcome back</h1>
                   <ol>
                       <li>
@@ -298,7 +298,7 @@ export class HomeViewElement extends LitElement {
                       </li>
                   </ol>
               </div>
-              <div class="misc-container" style="flex-direction: column">
+              <div class="misc-container animated" style="flex-direction: column">
                   <h1>Friend Activity</h1>
               </div>
           </div>
