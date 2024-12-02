@@ -248,7 +248,7 @@ export class HomeViewElement extends LitElement {
                           </a>
                       </li>
                       <li>
-                          <a href="/goals/">
+                          <a href="/app/goals/">
                               Goals
                               <svg class="icon">
                                   <use href="/icons/misc.svg#goal" />
@@ -256,7 +256,7 @@ export class HomeViewElement extends LitElement {
                           </a>
                       </li>
                       <li>
-                          <a href="./habits.html">
+                          <a href="/app/habits/">
                               Habits
                               <svg class="icon">
                                   <use href="/icons/misc.svg#habit" />
@@ -264,7 +264,7 @@ export class HomeViewElement extends LitElement {
                           </a>
                       </li>
                       <li>
-                          <a href="./physical.html">
+                          <a href="/app/physical/">
                               Physical
                               <svg class="icon">
                                   <use href="/icons/misc.svg#physical" />
@@ -272,7 +272,7 @@ export class HomeViewElement extends LitElement {
                           </a>
                       </li>
                       <li>
-                          <a href="./metrics.html">
+                          <a href="/app/metrics/">
                               Metrics
                               <svg class="icon">
                                   <use href="/icons/misc.svg#metric" />

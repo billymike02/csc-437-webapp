@@ -7,16 +7,12 @@ import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
 import {ProfileViewElement} from "./views/profile-view.ts";
 import {LoginForm} from "./components/login-form";
+import {UnknownViewElement} from "./views/unknown-view.ts";
+import { JournalViewElement} from "./views/journal-view.ts";
 
 let _user = new Auth.User();
 
 const routes = [
-    {
-        path: "/app/tour/:id",
-        view: (params: Switch.Params) => html`
-      <tour-view tour-id=${params.id}></tour-view>
-    `
-    },
     {
         auth: "protected",
         path: "/app",
@@ -35,9 +31,29 @@ const routes = [
         path: "/",
         redirect: "/app"
     },
+
     {
         path: "/app/journals/",
-        view: () => html`<span>Journals</span>`
+        view: () => html`<journal-view></journal-view>`
+    },
+    {
+        auth: "protected",
+        path: "/app/journals/:id/edit",
+        view: (params: Switch.Params) => html`
+        <journal-view edit journal-id=${params.id}></journal-view>`
+    },
+    {
+        path: "/app/goals/",
+        view: () => html`<unknown-view />`
+    },
+
+    {
+        path: "/app/habits/",
+        view: () => html`<unknown-view></unknown-view>`
+    },
+    {
+        path: "/app/physical/",
+        view: () => html`<unknown-view />`
     },
     {
         path: "/app/login/",
@@ -52,8 +68,10 @@ class AppElement extends LitElement {
     static uses = define({
         "home-view": HomeViewElement,
         "profile-view": ProfileViewElement,
+        "journal-view": JournalViewElement,
         "login-form": LoginForm,
         "mu-history": History.Provider,
+        "unknown-view": UnknownViewElement,
         "mu-switch": class AppSwitch extends Switch.Element {
             constructor() {
                 super(routes, "blazing:history", "blazing:auth");
@@ -71,9 +89,9 @@ class AppElement extends LitElement {
 
     protected render() {
         return html`
-      <home-view></home-view>
-      
-    `;
+            <home-view></home-view>
+
+        `;
     }
 
     _authObserver = new Observer<Auth.Model>(

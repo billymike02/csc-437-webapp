@@ -45,8 +45,6 @@ export class BlazingHeaderElement extends View<Model, Msg> {
         const { username } =
         this.profile || {};
 
-        console.log("found username:", this.username);
-
         const profileHref = `/app/profile/${username}`;
 
         return html`

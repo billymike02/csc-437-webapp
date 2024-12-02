@@ -26,7 +26,7 @@ const JournalSchema = new import_mongoose.Schema({
   title: { type: String, required: true, trim: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: false },
-  entries: { type: [] }
+  content: { type: String, required: true }
 });
 const JournalModel = (0, import_mongoose.model)("JournalSchema", JournalSchema);
 function index() {

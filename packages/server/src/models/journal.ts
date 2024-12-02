@@ -5,7 +5,7 @@ export interface Journal {
   title: string;
   startDate: Date;
   endDate?: Date;
-  entries?: String[];
+  content?: String;
 }
 
 export interface Entry {

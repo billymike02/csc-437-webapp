@@ -5,7 +5,7 @@ const JournalSchema = new Schema<Journal>({
   title: { type: String, required: true, trim: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: false },
-  entries: { type: [] },
+  content: { type: String, required: true },
 });
 
 const JournalModel = model<Journal>("JournalSchema", JournalSchema);

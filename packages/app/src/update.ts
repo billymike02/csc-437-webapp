@@ -1,7 +1,7 @@
 import { Auth, Update } from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model } from "./model";
-import {Friend} from "server/models";
+import {Friend, Journal} from "server/models";
 
 export default function update(
     message: Msg,
@@ -10,23 +10,73 @@ export default function update(
 ) {
     switch (message[0]) {
         case "profile/select":
+            console.log("SWITCH CASE 1")
             selectProfile(message[1], user).then((profile) =>
                 apply((model) => ({ ...model, profile }))
             );
             break;
+
         // put the rest of your cases here
+        case "journal/save":
+            console.log("saving journal")
+            saveJournal(message[1], user)
+                .then((journal) =>
+                    apply((model) => ({ ...model, journal }))
+                )
+                .then(() => {
+                    const { onSuccess } = message[1];
+                    if (onSuccess) onSuccess();
+                })
+                .catch((error: Error) => {
+                    const { onFailure } = message[1];
+                    if (onFailure) onFailure(error);
+                });
+            break;
         default:
             const unhandled: string = message[0];
             throw new Error(`Unhandled Auth message "${unhandled}"`);
     }
 }
 
+function saveJournal(
+    msg: {
+        journalid: string;
+        content: string;
+    },
+    user: Auth.User
+) {
+
+    console.log("CONTENT: ", msg.content);
+
+    return fetch(`/api/journals/${msg.journalid}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            ...Auth.headers(user)
+        },
+        body: JSON.stringify(msg.content)
+    })
+        .then((response: Response) => {
+            if (response.status === 200) return response.json();
+            else
+                throw new Error(
+                    `Failed to save journal for ${msg.journalid}`
+                );
+        })
+        .then((json: unknown) => {
+            if (json) return json as Journal;
+            return undefined;
+        });
+}
+
+
+
 function selectProfile(
     msg: { userid: string },
     user: Auth.User
 ) {
 
-
+    console.log("SELECTING PROFILE")
 
     return fetch(`/api/friends/${msg.userid}`, {
         headers: Auth.headers(user)
