@@ -1,6 +1,7 @@
 import { define, Events, Rest } from "@calpoly/mustang";
 import { css, html, LitElement } from "lit";
 import { property } from "lit/decorators.js";
+import resetCSS from "../css/reset.ts"
 
 define({ "restful-form": Rest.FormElement });
 
@@ -11,33 +12,58 @@ export class LoginForm extends LitElement {
     render() {
         const init = { username: "", password: "" };
         return html`
+            
+            <h2>Login</h2>
+            
       <restful-form
+          
         new
         .init=${init}
         src="/auth/login"
         @mu-rest-form:created=${this._handleSuccess}
         @mu-rest-form:error=${this._handleError}>
           <label>
-              <span>Username:</span>
-              <input name="username" autocomplete="off" />
+              <input name="username" autocomplete="off" placeholder="Username" />
           </label>
           <label>
-              <span>Password:</span>
-              <input type="password" name="password" />
+              <input type="password" name="password" placeholder="Password"/>
           </label>
       </restful-form>
       <p class="error">
         ${this.message ? "Invalid Username or Password" : ""}
       </p>
       <pre>${this.message}</pre>
+      <a href="/app/register">No account? Sign up here.</a>
     `;
     }
 
-    static styles = css`
+    static styles = [resetCSS, css`
     .error {
       color: firebrick;
     }
-  `;
+        
+    *
+    {
+        justify-content: center;
+        display: flex;
+        align-items: center;
+
+    }
+        
+    input
+    {
+        height: 40px;
+        font-size: var(--font-size-medium);
+        font-weight: normal;
+        background-color: var(--interactive-element-color);
+        border-radius: var(--rounded-corners-small);
+        margin-bottom: 10px;
+        padding: 3px;
+        padding-inline: 10px;
+        border-width: 0;
+        color: var(--color-text-default);
+    }
+  `];
 
     get next() {
         let query = new URLSearchParams(document.location.search);

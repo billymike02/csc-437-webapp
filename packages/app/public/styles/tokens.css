@@ -16,6 +16,7 @@
 
   /* visual niceties */
   --rounded-corners-regular: 16px;
+  --rounded-corners-small: 8px;
   --bright-accent-color: rgb(30 215 96);
 
   /* spacing rules */

@@ -21,6 +21,7 @@ const styles = css `
 
     /* visual niceties */
     --rounded-corners-regular: 16px;
+    --rounded-corners-small: 8px;
 
     /* spacing rules */
     --margin-standard: 36px;

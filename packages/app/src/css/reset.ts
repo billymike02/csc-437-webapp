@@ -35,4 +35,10 @@ export default css`
     {
         scale: var(--animated-scale-small);
     }
+
+    a
+    {
+        text-decoration: none;
+        color: var(--color-text-default);
+    }
 `;

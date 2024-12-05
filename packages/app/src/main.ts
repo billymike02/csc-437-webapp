@@ -9,6 +9,7 @@ import {ProfileViewElement} from "./views/profile-view.ts";
 import {LoginForm} from "./components/login-form";
 import {UnknownViewElement} from "./views/unknown-view.ts";
 import { JournalViewElement} from "./views/journal-view.ts";
+import {SignupFormElement} from "./components/signup-form.ts";
 
 let _user = new Auth.User();
 
@@ -44,25 +45,34 @@ const routes = [
         <journal-view edit journal-id=${params.id}></journal-view>`
     },
     {
+        auth: "protected",
         path: "/app/goals/",
         view: () => html`<unknown-view />`
     },
 
     {
+        auth: "protected",
         path: "/app/habits/",
         view: () => html`<unknown-view></unknown-view>`
     },
     {
+        auth: "protected",
         path: "/app/physical/",
         view: () => html`<unknown-view />`
     },
     {
+        auth: "protected",
         path: "/app/metrics/",
         view: () => html`<unknown-view />`
     },
     {
+
         path: "/app/login/",
         view: () => html`<login-form></login-form>`
+    },
+    {
+        path: "/app/register",
+        view: () => html`<signup-form></signup-form>`
     }
 
 ];
@@ -76,6 +86,7 @@ class AppElement extends LitElement {
         "journal-view": JournalViewElement,
         "login-form": LoginForm,
         "mu-history": History.Provider,
+        "signup-form": SignupFormElement,
         "unknown-view": UnknownViewElement,
         "mu-switch": class AppSwitch extends Switch.Element {
             constructor() {

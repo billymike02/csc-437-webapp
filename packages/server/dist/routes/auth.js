@@ -36,6 +36,7 @@ var import_dotenv = __toESM(require("dotenv"));
 var import_express = __toESM(require("express"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var import_credential_svc = __toESM(require("../services/credential-svc"));
+var import_friend_svc2 = __toESM(require("../services/friend-svc"));
 const router = import_express.default.Router();
 import_dotenv.default.config();
 const TOKEN_SECRET = process.env.TOKEN_SECRET || "NOT_A_SECRET";
@@ -64,14 +65,22 @@ function authenticateUser(req, res, next) {
     });
   }
 }
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).send("Bad request: Invalid input data.");
   } else {
-    import_credential_svc.default.create(username, password).then((creds) => generateAccessToken(creds.username)).then((token) => {
-      res.status(201).send({ token });
-    });
+    try {
+      const creds = await import_credential_svc.default.create(username, password);
+      const friend = await import_friend_svc2.default.createFromUsername(username);
+      const token = await generateAccessToken(username);
+      res.status(201).send({
+        friend,
+        token
+      });
+    } catch (err) {
+      res.status(500).send(err.message || "Internal Server Error");
+    }
   }
 });
 router.post("/login", (req, res) => {

@@ -4,6 +4,7 @@ import { property, state } from "lit/decorators.js";
 import { Friend } from "server/models";
 import { Msg } from "../messages";
 import { Model } from "../model";
+import resetCSS from "../css/reset.ts"
 
 export class ProfileViewElement extends View<Model, Msg> {
     @property()
@@ -28,7 +29,10 @@ export class ProfileViewElement extends View<Model, Msg> {
 
         if (this.profile == undefined)
         {
-            return html`<h3>No profile found.</h3>`
+
+
+            return html`<h3>No profile found.</h3>
+            <a href="#" @click=${signOutUser}>Login here.</a>`
         }
 
         const profileUrl = `wmwoodwa.csse.dev/app/profile/${username}`;
@@ -36,10 +40,9 @@ export class ProfileViewElement extends View<Model, Msg> {
 
         return html`
             <h3>Username: ${username}</h3>
-            <h3>Age: ${age || "N/A"}</h3>
-            <h3>Weight: ${weight || "N/A"}</h3>
-            <h3>Profile Link: ${profileUrl}</h3>
 
+            <h3>Profile Link: ${profileUrl}</h3>
+            <br />
             <a href="#" @click=${signOutUser}>Sign out</a>
     `;
     }
@@ -63,6 +66,8 @@ export class ProfileViewElement extends View<Model, Msg> {
             ]);
         }
     }
+
+    static styles = [resetCSS];
 
 }
 

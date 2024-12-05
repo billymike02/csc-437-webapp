@@ -69,6 +69,8 @@ function create(username, password) {
         });
       })
     );
+  }).catch((err) => {
+    console.error("Error fetching user credential.");
   });
 }
 function verify(username, password) {

@@ -7,6 +7,9 @@ import express, {
 import jwt from "jsonwebtoken";
 
 import credentials from "../services/credential-svc";
+import friends from "../services/friend-svc"
+import Friends from "../services/friend-svc";
+import {Friend} from "../models";
 
 const router = express.Router();
 
@@ -49,18 +52,29 @@ export function authenticateUser(
     }
 }
 
-router.post("/register", (req: Request, res: Response) => {
+router.post("/register", async (req: Request, res: Response) => {
     const { username, password } = req.body; // from form
 
     if (!username || !password) {
         res.status(400).send("Bad request: Invalid input data.");
     } else {
-        credentials
-            .create(username, password)
-            .then((creds) => generateAccessToken(creds.username))
-            .then((token) => {
-                res.status(201).send({ token: token });
+        try {
+            const creds = await credentials.create(username, password);
+
+            // Create a friend entry
+            const friend = await Friends.createFromUsername(username);
+
+            // Generate an access token
+            const token = await generateAccessToken(username);
+
+            // Send a single response
+            res.status(201).send({
+                friend,
+                token,
             });
+        } catch (err) {
+            res.status(500).send(err.message || "Internal Server Error");
+        }
     }
 });
 

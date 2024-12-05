@@ -24,8 +24,8 @@ module.exports = __toCommonJS(friend_svc_exports);
 var import_mongoose = require("mongoose");
 const FriendSchema = new import_mongoose.Schema({
   username: { type: String, required: true, trim: true },
-  age: { type: Number, required: true },
-  weight: { type: Number, required: true }
+  age: { type: Number, required: false },
+  weight: { type: Number, required: false }
 });
 const FriendModel = (0, import_mongoose.model)("FriendSchema", FriendSchema);
 function index() {
@@ -35,6 +35,11 @@ function get(username) {
   return FriendModel.find({ username }).then((list) => list[0]).catch(() => {
     throw `${username} Not Found`;
   });
+}
+function createFromUsername(username) {
+  const new_user = { username };
+  const j = new FriendModel(new_user);
+  return j.save();
 }
 function create(json) {
   const j = new FriendModel(json);
@@ -57,4 +62,4 @@ function remove(friendid) {
     if (!deleted) throw `${friendid} not deleted`;
   });
 }
-var friend_svc_default = { index, get, create, update, remove };
+var friend_svc_default = { index, get, create, update, remove, createFromUsername };

@@ -22,6 +22,9 @@ class JournalViewer extends LitElement {
 
         <div class="textContent">
           <slot name="content"></slot>
+
+          </textarea>
+   
         </div>
 
         <nav>
@@ -54,7 +57,7 @@ class JournalViewer extends LitElement {
           padding: var(--padding-standard);
 
           transition: var(--transition-regular);
-      
+          white-space: preserve-breaks;
           
         }
         
