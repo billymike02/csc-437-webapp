@@ -33,6 +33,7 @@ const routes = [
     },
 
     {
+        auth: "protected",
         path: "/app/journals/",
         view: () => html`<journal-view class="journalView" journal-id="674e171fcdfafa1eeb94c694"></journal-view>`
     },
@@ -53,6 +54,10 @@ const routes = [
     },
     {
         path: "/app/physical/",
+        view: () => html`<unknown-view />`
+    },
+    {
+        path: "/app/metrics/",
         view: () => html`<unknown-view />`
     },
     {

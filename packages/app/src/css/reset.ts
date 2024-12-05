@@ -23,7 +23,7 @@ export default css`
     }
     a
     {
-        color: white;
+        color: var(--color-text-default);
         font-weight: bold;
     }
 

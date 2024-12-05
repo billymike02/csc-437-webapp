@@ -1,4 +1,4 @@
-import { View } from "@calpoly/mustang";
+import {Events, View} from "@calpoly/mustang";
 import { html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { Friend } from "server/models";
@@ -39,8 +39,12 @@ export class ProfileViewElement extends View<Model, Msg> {
             <h3>Age: ${age || "N/A"}</h3>
             <h3>Weight: ${weight || "N/A"}</h3>
             <h3>Profile Link: ${profileUrl}</h3>
+
+            <a href="#" @click=${signOutUser}>Sign out</a>
     `;
     }
+
+
 
     attributeChangedCallback(
         name: string,
@@ -60,4 +64,8 @@ export class ProfileViewElement extends View<Model, Msg> {
         }
     }
 
+}
+
+function signOutUser(ev: Event) {
+    Events.relay(ev, "auth:message", ["auth/signout"]);
 }

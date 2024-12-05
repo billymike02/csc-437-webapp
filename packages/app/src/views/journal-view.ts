@@ -10,7 +10,7 @@ import {property, state} from "lit/decorators.js";
 import {Journal} from "server/models";
 import {Model} from "../model.ts";
 import {Msg} from "../messages.ts";
-import {resetCSS} from "../css/reset.ts"
+
 
 class JournalViewer extends LitElement {
   @property() // I think this gets set in HTML attribute
@@ -19,7 +19,7 @@ class JournalViewer extends LitElement {
   render() {
     return html`
 <!--      <section>-->
-        <h2>Your Journal</h2>
+
         <div class="textContent">
           <slot name="content"></slot>
         </div>
@@ -54,6 +54,7 @@ class JournalViewer extends LitElement {
           padding: var(--padding-standard);
 
           transition: var(--transition-regular);
+      
           
         }
         

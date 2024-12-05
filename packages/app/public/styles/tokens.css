@@ -9,15 +9,10 @@
 
   /* color scheme of our app */
   --body-color: rgb(0, 0, 0);
+  --body-color-inverted: rgb(255, 255, 255);
   --color-text-default: rgb(255, 255, 255);
   --body-foreground-color: rgb(31 31 31);
   --interactive-element-color: rgb(62, 62, 62);
-
-  /* inverted color scheme of our app */
-  --body-color-inverted: rgb(0, 0, 0);
-  --color-text-default-inverted: rgb(0, 0, 0);
-  --body-foreground-color-inverted: rgb(31 31 31);
-  --interactive-element-color-inverted: rgb(217, 217, 217);
 
   /* visual niceties */
   --rounded-corners-regular: 16px;
@@ -26,12 +21,21 @@
   /* spacing rules */
   --margin-standard: 36px;
   --padding-standard: 24px;
+  --padding-medium: 20px;
+  --padding-small: 16px;
   --gap-regular: 8px;
   --gap-large: 16px;
 
   /* animations */
   --transition-regular: 0.3s;
-
   --animated-scale-small: 1.01;
   --animated-scale: 1.03;
+}
+
+body.light-mode
+{
+  --color-text-default: rgb(0, 0, 0);
+  --body-foreground-color: rgba(241, 241, 241, 0.68);
+  --interactive-element-color: rgb(224, 224, 224);
+
 }
