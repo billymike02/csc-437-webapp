@@ -23,8 +23,7 @@ export class ProfileViewElement extends View<Model, Msg> {
 
         const {
             username,
-            age,
-            weight,
+
         } = this.profile || {};
 
         if (this.profile == undefined)

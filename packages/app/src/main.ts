@@ -2,7 +2,7 @@ import {Auth, define, History, Switch, Store, Observer} from "@calpoly/mustang";
 import { Msg } from "./messages";
 import { Model, init } from "./model";
 import update from "./update";
-import {css, html, LitElement} from "lit";
+import { html, LitElement} from "lit";
 import { BlazingHeaderElement } from "./components/blazing-header";
 import { HomeViewElement } from "./views/home-view";
 import {ProfileViewElement} from "./views/profile-view.ts";
@@ -11,7 +11,6 @@ import {UnknownViewElement} from "./views/unknown-view.ts";
 import { JournalViewElement} from "./views/journal-view.ts";
 import {SignupFormElement} from "./components/signup-form.ts";
 
-let _user = new Auth.User();
 
 const routes = [
     {
@@ -90,6 +89,7 @@ class AppElement extends LitElement {
         "unknown-view": UnknownViewElement,
         "mu-switch": class AppSwitch extends Switch.Element {
             constructor() {
+                // @ts-ignore
                 super(routes, "blazing:history", "blazing:auth");
             }
         },
@@ -121,7 +121,7 @@ class AppElement extends LitElement {
         super.connectedCallback();
         this._authObserver.observe(({ user }) => {
             if (user) {
-                _user = user;
+
             }
         });
     }

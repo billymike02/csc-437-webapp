@@ -9,23 +9,34 @@
 
   /* color scheme of our app */
   --body-color: rgb(0, 0, 0);
+  --body-color-inverted: rgb(255, 255, 255);
   --color-text-default: rgb(255, 255, 255);
-  --color-text-subtle: rgb(179 179 179);
-  --body-highlight-color: rgb(51 51 51);
-  --body-regular-color: rgb(31 31 31);
-  --bright-accent-color: rgb(30 215 96);
-  --button-color: rgb(62, 62, 62);
+  --body-foreground-color: rgb(31 31 31);
+  --interactive-element-color: rgb(62, 62, 62);
 
   /* visual niceties */
   --rounded-corners-regular: 16px;
+  --rounded-corners-small: 8px;
+  --bright-accent-color: rgb(30 215 96);
 
   /* spacing rules */
   --margin-standard: 36px;
   --padding-standard: 24px;
+  --padding-medium: 20px;
+  --padding-small: 16px;
   --gap-regular: 8px;
   --gap-large: 16px;
 
   /* animations */
   --transition-regular: 0.3s;
+  --animated-scale-small: 1.01;
   --animated-scale: 1.03;
+}
+
+body.light-mode
+{
+  --color-text-default: rgb(0, 0, 0);
+  --body-foreground-color: rgba(241, 241, 241, 0.68);
+  --interactive-element-color: rgb(224, 224, 224);
+
 }
