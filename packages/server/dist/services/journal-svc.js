@@ -48,7 +48,9 @@ function create(json2) {
   return j.save();
 }
 function createDefault() {
-  const j = new JournalModel();
+  const content = "";
+  const new_journal = { content };
+  const j = new JournalModel(new_journal);
   console.log("Creating journal for user.");
   return j.save();
 }

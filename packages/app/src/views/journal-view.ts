@@ -171,6 +171,8 @@ class JournalEditor extends LitElement {
         nav:hover {
           scale: var(--animated-scale);
         }
+
+
       `
   ]
 

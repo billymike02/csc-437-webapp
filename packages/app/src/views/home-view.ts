@@ -132,10 +132,15 @@ export class HomeViewElement extends LitElement {
               </div>
               <div class="info-container animated">
                   <h1>Welcome back</h1>
+                  <p>Remember to view this portal daily to ensure a healthy lifestyle.</p>
+                  <br />
+                  <p>This was created for CSC437 in Fall Quarter 2024 at Cal Poly-SLO!</p>
                   
               </div>
               <div class="misc-container animated" style="flex-direction: column">
-                  <h1>Friend Activity</h1>
+                  <h1>Instructions</h1>
+                  <p>Visit the 'Journals' page to decompress and reflect on your life. Your information is private to other users.</p>
+                  
               </div>
           </div>
 

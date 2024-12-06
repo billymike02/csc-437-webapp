@@ -36,7 +36,11 @@ function create(json: Journal): Promise<Journal> {
 }
 
 function createDefault(): Promise<Journal> {
-  const j = new JournalModel();
+  const content = ""
+
+  const new_journal = { content }
+
+  const j = new JournalModel(new_journal);
 
   console.log("Creating journal for user.");
   return j.save();
