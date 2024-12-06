@@ -22,9 +22,10 @@ class JournalViewer extends LitElement {
 
 
         <div class="textContent">
+          
           <slot name="content"></slot>
 
-          </textarea>
+       
    
         </div>
 
