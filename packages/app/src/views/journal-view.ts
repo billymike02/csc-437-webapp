@@ -7,7 +7,7 @@ import {
 } from "@calpoly/mustang"
 import { css, html, LitElement} from "lit";
 import {property, state} from "lit/decorators.js";
-import {Journal} from "server/models";
+import {Friend, Journal} from "server/models";
 import {Model} from "../model.ts";
 import {Msg} from "../messages.ts";
 
@@ -19,6 +19,7 @@ class JournalViewer extends LitElement {
   render() {
     return html`
 <!--      <section>-->
+
 
         <div class="textContent">
           <slot name="content"></slot>
@@ -192,6 +193,11 @@ export class JournalViewElement extends View<Model, Msg> {
     return this.model.journal;
   }
 
+  @state()
+  get profile(): Friend | undefined {
+    return this.model.profile;
+  }
+
 
   constructor() {
     super("blazing:model");
@@ -221,9 +227,11 @@ export class JournalViewElement extends View<Model, Msg> {
 
   render() {
 
-    const { _id, content } = this.journal || {};
 
-    console.log("Journal has ID: ", _id);
+    const { journalId } = this.profile || {};
+    const { content } = this.journal || {};
+
+
     console.log("Journal has structure: ", this.journal);
 
 
@@ -240,7 +248,8 @@ export class JournalViewElement extends View<Model, Msg> {
           </journal-editor>
         `
       : html`
-          <journal-viewer class="journalView" journalid=${_id}>
+
+          <journal-viewer class="journalView" journalid=${journalId}>
             <span slot="content">${content}</span>
           </journal-viewer>
         `;
@@ -248,16 +257,15 @@ export class JournalViewElement extends View<Model, Msg> {
 
   _handleSubmit(event: Form.SubmitEvent<Journal>) {
     console.log("Handling submit of mu-form");
-    const journalid ="674e171fcdfafa1eeb94c694"
 
     this.dispatchMessage([
       "journal/save",
       {
-        journalid: journalid,
+        journalid: this.journalid,
         content: event.detail,
         onSuccess: () =>
           History.dispatch(this, "history/navigate", {
-            href: `/app/journals/`
+            href: `/app/journals/${this.journalid}`
           }),
         onFailure: (error: Error) =>
           console.log("ERROR:", error)

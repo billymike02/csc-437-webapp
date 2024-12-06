@@ -100,8 +100,6 @@ function selectProfile(
     user: Auth.User
 ) {
 
-    console.log("SELECTING PROFILE")
-
     return fetch(`/api/friends/${msg.userid}`, {
         headers: Auth.headers(user)
     })

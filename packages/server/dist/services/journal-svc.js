@@ -23,12 +23,12 @@ __export(journal_svc_exports, {
 module.exports = __toCommonJS(journal_svc_exports);
 var import_mongoose = require("mongoose");
 const JournalSchema = new import_mongoose.Schema({
-  title: { type: String, required: true, trim: true },
-  startDate: { type: Date, required: true },
+  title: { type: String, required: false, trim: true },
+  startDate: { type: Date, required: false },
   endDate: { type: Date, required: false },
-  content: { type: String, required: true }
+  content: { type: String, required: false }
 });
-const JournalModel = (0, import_mongoose.model)("JournalSchema", JournalSchema);
+const JournalModel = (0, import_mongoose.model)("Journal", JournalSchema);
 function index() {
   return JournalModel.find();
 }
@@ -43,8 +43,13 @@ function get(journalid) {
     throw new Error("An error occurred while retrieving the journal");
   });
 }
-function create(json) {
-  const j = new JournalModel(json);
+function create(json2) {
+  const j = new JournalModel(json2);
+  return j.save();
+}
+function createDefault() {
+  const j = new JournalModel();
+  console.log("Creating journal for user.");
   return j.save();
 }
 function update(journalid, journal) {
@@ -62,4 +67,4 @@ function remove(journalid) {
     if (!deleted) throw `${journalid} not deleted`;
   });
 }
-var journal_svc_default = { index, get, create, update, remove };
+var journal_svc_default = { index, get, create, update, remove, createDefault };

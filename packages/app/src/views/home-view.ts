@@ -2,11 +2,15 @@ import { Auth, Observer } from "@calpoly/mustang";
 import { html, css, LitElement } from "lit";
 import resetCSS from "../css/reset.ts";
 import stylesCSS from "../css/styles.ts"
+import {property} from "lit/decorators.js";
 
 
 export class HomeViewElement extends LitElement {
 
     src = ""
+
+    @property({ type: String })
+    journalId = ""
 
     static styles = [resetCSS, stylesCSS, css`
         
@@ -85,7 +89,7 @@ export class HomeViewElement extends LitElement {
                   <ol class="entry-tab">
                       <h1>Personal Wellness!</h1>
                       <li>
-                          <a href="/app/journals/">
+                          <a href='/app/journals/${this.journalId}'>
                               Journal
                               <svg class="icon">
                                   <use href="/icons/misc.svg#book" />
@@ -166,10 +170,34 @@ export class HomeViewElement extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this._authObserver.observe(({ user }) => {
+
+        this._authObserver.observe(async ({ user }) => {
             if (user) {
                 this._user = user;
+
+                console.log("connected callback")
+
+                const response = await fetch(`/api/friends/${user.username}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.journalId)
+                {
+                    console.log("set journal id to:", data.journalId);
+                    this.journalId = data.journalId;
+                }
             }
+
+
             this.hydrate(this.src);
         });
     }

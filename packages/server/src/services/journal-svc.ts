@@ -1,14 +1,15 @@
 import { model, Schema } from "mongoose";
 import { Journal, Entry } from "../models/journal";
+import {json} from "express";
 
 const JournalSchema = new Schema<Journal>({
-  title: { type: String, required: true, trim: true },
-  startDate: { type: Date, required: true },
+  title: { type: String, required: false, trim: true },
+  startDate: { type: Date, required: false },
   endDate: { type: Date, required: false },
-  content: { type: String, required: true },
+  content: { type: String, required: false },
 });
 
-const JournalModel = model<Journal>("JournalSchema", JournalSchema);
+const JournalModel = model<Journal>("Journal", JournalSchema);
 
 function index(): Promise<Journal[]> {
   return JournalModel.find();
@@ -34,6 +35,13 @@ function create(json: Journal): Promise<Journal> {
   return j.save();
 }
 
+function createDefault(): Promise<Journal> {
+  const j = new JournalModel();
+
+  console.log("Creating journal for user.");
+  return j.save();
+}
+
 function update(journalid: string, journal: Journal): Promise<Journal> {
   return JournalModel.findOneAndUpdate({ _id: journalid }, journal, {
     new: true,
@@ -52,4 +60,4 @@ function remove(journalid: String): Promise<void> {
   });
 }
 
-export default { index, get, create, update, remove };
+export default { index, get, create, update, remove, createDefault };

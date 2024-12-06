@@ -34,8 +34,8 @@ const routes = [
 
     {
         auth: "protected",
-        path: "/app/journals/",
-        view: () => html`<journal-view class="journalView" journal-id="674e171fcdfafa1eeb94c694"></journal-view>`
+        path: "/app/journals/:id",
+        view: (params: Switch.Params) => html`<journal-view class="journalView" journal-id=${params.id}></journal-view>`
     },
     {
         auth: "protected",
@@ -119,11 +119,8 @@ class AppElement extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this._authObserver.observe(({ user }) => {
-            if (user) {
 
-            }
-        });
+
     }
 
 }
